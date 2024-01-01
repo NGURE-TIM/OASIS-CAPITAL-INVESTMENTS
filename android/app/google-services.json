@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2455438015",
+    "project_id": "fulusi-27e65",
+    "storage_bucket": "fulusi-27e65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2455438015:android:69bc714fbd6eaa26ab3c0a",
+        "android_client_info": {
+          "package_name": "com.example.fulusi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClYyxU_Q706OQk-CMDvXBC5y7Bbw_MBVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
