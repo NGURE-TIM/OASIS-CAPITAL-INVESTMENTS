@@ -9,3 +9,4 @@ const Color accent= Color(0xFFffb000);
 const Color orange= Color(0xFFf29a35);
 const Color white =Colors.white;
 const Color error=Colors.red;
+const Color transparent=Colors.transparent;

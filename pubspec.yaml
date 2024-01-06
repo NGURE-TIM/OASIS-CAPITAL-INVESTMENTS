@@ -40,6 +40,8 @@ dependencies:
   firebase_auth: ^4.15.3
   firebase_storage: ^11.5.6
   cloud_firestore: ^4.13.6
+  dashed_circular_progress_bar: ^0.0.6
+  slide_countdown: ^1.5.0
 
 
 dev_dependencies:

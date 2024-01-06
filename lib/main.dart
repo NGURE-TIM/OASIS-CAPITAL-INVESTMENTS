@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'colors/colors.dart';
-import 'logins/login_screens/register.dart';
-import 'package:firebase_core/firebase_core.dart';
-
+import 'logins/login_screens/register/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'data_Entry/entry.dart';
 
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +23,7 @@ class Fulusi extends StatelessWidget {
 Widget build(BuildContext context) {
 return MaterialApp(
 debugShowCheckedModeBanner: false,
-title: 'p2p mobile loan app',
+title: 'Fulusi',
 theme: ThemeData(
   brightness: Brightness.dark,
   fontFamily:'Roboto',
@@ -45,7 +44,9 @@ class Splash extends StatelessWidget {
       gifPath: 'assets/images/splashscreen.gif',
       gifWidth: 269,
       gifHeight: 474,
-     nextScreen:  Register(),
+     nextScreen:entry(),
+
+     //Register(),
       duration: const Duration(milliseconds: 5000),
       onInit: () async {
         debugPrint("onInit");
