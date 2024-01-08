@@ -228,8 +228,9 @@ textField=true;
     return textField ? Text('Phone number should be 12 digits long inclusive of country code!',
 
       style: TextStyle(
-        fontSize: 10,
-        color: error,
+        color: Colors.red,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
       ),
     )
         : SizedBox();

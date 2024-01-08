@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
-import 'package:slide_countdown/slide_countdown.dart';
 import 'dataEntryWidgets/widgets.dart';
-
+import 'package:fulusi/data_Entry/personal.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 late String Firstname='x';
 late String Middlename='x';
@@ -14,14 +12,23 @@ late String DOB='x';
 late String Gender='x';
 
 bool Complete=false;
-onComplete()async{
-while(Complete==false)
-  await Future.delayed(Duration(seconds:20));
-if(Complete){
+bool buttonIsPressed=false;
+onComplete(){
 
+ if (Firstname != 'x' &&
+      Middlename != 'x' &&
+      Lastname != 'x' &&
+      ID != 'x' &&
+      DOB != 'x' &&
+      Gender != 'x'){
+   Complete=true;
+ }
+ else{
+   Complete=false;
+ }
 }
 
-}
+
 class entry extends StatefulWidget {
   const entry({Key? key}) : super(key: key);
 
@@ -31,6 +38,7 @@ class entry extends StatefulWidget {
 
 class _entryState extends State<entry> {
   @override
+
   Widget build(BuildContext context) {
     return  SafeArea(child:Scaffold(
       backgroundColor: white,
@@ -61,7 +69,7 @@ style:TextStyle(
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,22 +82,92 @@ style:TextStyle(
                 ],
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
 
-              TextFields('First name','Please enter first name' ,Firstname),
-              TextFields('Middle name','Please enter middle name',Middlename),
-              TextFields('Last name','Please enter last name',Lastname),
-              TextFields('National id','Kenyan issue',ID),
-              TextFields('Date of birth ','dd/mm/yy',DOB),
-              TextFields('Gender ','Female/Male',Gender),
+              TextFields('First name','Please enter first name' ,Firstname , (value){
+                Firstname=value;
+              }),
+              TextFields('Middle name','Please enter middle name',Middlename,(value){
+                Middlename=value;
+              }),
+              TextFields('Last name','Please enter last name',Lastname,(value){
+                Lastname=value;
+              }),
+              TextFields('National id','Kenyan issue',ID,(value){
+                ID=value;
+              }),
+              TextFields('Date of birth ','dd/mm/yy',DOB,(value){
+                DOB=value;
+              }),
+              TextFields('Gender ','Female/Male',Gender,(value){
+                Gender=value;
+              } ),
               const SizedBox(
                 height: 10,
               ),
+              if (Complete==false && buttonIsPressed)
+                const Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'One or more fields are not filled !!',
+                        style: TextStyle(
+                          color: error,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+
                Container(
                  height: 60,
                  width: double.infinity,
-                 child: ElevatedButton(onPressed: (){}, child: Text(
+                 child: ElevatedButton(onPressed: ()async{
+                   onComplete();
+                   if(Complete){
+                     /* showDialog(
+                       context: context,
+                       builder: (BuildContext context) {
+                         return Stack(
+                             children: [
+                               ModalBarrier(
+                                 color: black.withOpacity(0.4),
+                               ),
+                               AlertDialog(
+                                 backgroundColor: transparent,
+                                 content: SimpleCircularProgressBar(
+                                   size: 50,
+                                   progressStrokeWidth: 5,
+                                   backStrokeWidth: 8,
+                                   mergeMode: true,
+                                   progressColors: const [seedBlue],
+                                   backColor: Colors.black.withOpacity(0.4),
+                                   animationDuration: 3,
+                                 ),
+                               ),
+                             ]
+                         );
+                       },
+                     );
+                     */
+
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => Personal()),
+                     );
+                   }
+                   else{
+                     setState(() {
+                       buttonIsPressed=true;
+                     });
+                   }
+                 }, child: Text(
                   'Next',
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
@@ -98,6 +176,9 @@ style:TextStyle(
                   ),
               ),
                   style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                       elevation: 0, backgroundColor: orange
                   ),
               ),
@@ -110,5 +191,3 @@ style:TextStyle(
     ));
   }
 }
-
-

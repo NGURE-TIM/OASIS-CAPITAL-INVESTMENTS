@@ -50,11 +50,14 @@ class circle extends StatelessWidget {
 
 
 
+
 class TextFields extends StatelessWidget {
+
   String label;
   String hintText;
   String textvalue;
-  TextFields(this.label , this.hintText , this.textvalue);
+  Function (String) onChanged;
+  TextFields(this.label , this.hintText , this.textvalue , this.onChanged);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,31 +76,32 @@ class TextFields extends StatelessWidget {
           ),
         ),
         Container(
-          height: 45,
+          height: 55,
           width: double.infinity,
           child: TextField(
-
             style: TextStyle(
                 color: black
             ),
+
             autofocus: false,
             textAlign: TextAlign.left,
             //controller: controller,
             cursorColor: grey,
             decoration:InputDecoration(
                 hintText: hintText,
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
                 enabledBorder: const OutlineInputBorder(
+                  borderRadius :BorderRadius.all(Radius.circular(10)),
                   borderSide:  BorderSide(
                       color: grey, width: 2.0),
                 ),
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius :BorderRadius.all(Radius.circular(10)),
+                  borderSide:  BorderSide(
+                      color: seedBlue, width: 2.0),
+                ),
                 hintStyle: TextStyle(
                     color: grey,fontSize: 20)),
-            onChanged: (value){
-              textvalue=value;
-            },
+            onChanged:onChanged,
           ),
         ),
       ],
