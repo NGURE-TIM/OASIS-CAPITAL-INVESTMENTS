@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+import 'package:fulusi/data_Entry/entry.dart';
 
 
  int phoneNumber = 0;
@@ -10,8 +13,6 @@ import 'package:slide_countdown/slide_countdown.dart';
  bool textField= false;
  FirebaseAuth auth=FirebaseAuth.instance;
  late String number;
-
-
 final TextEditingController _fieldOne = TextEditingController();
 final TextEditingController _fieldTwo = TextEditingController();
 final TextEditingController _fieldThree = TextEditingController();
@@ -41,22 +42,26 @@ String updatesmsCode  () {
       _fieldSix.text ;
   return otp;
 }
-late final StreamDuration streamDuration = StreamDuration(
+late StreamDuration streamDuration = StreamDuration(
   config: const StreamDurationConfig(
     countDownConfig: CountDownConfig(
       duration: Duration(minutes: 01, seconds: 60),
     ),
   ),
 );
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+
+
+
+
+class Verify extends StatefulWidget {
+  const Verify({Key? key}) : super(key: key);
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Verify> createState() => _VerifyState();
 
 }
 
-class _RegisterState extends State<Register> {
+class _VerifyState extends State<Verify> {
 
    @override
    void initState(){
@@ -109,7 +114,7 @@ void dispose(){
                     if(number.length==12){
                       setState(() {
                         textField=true;
-                    signInUser('+$number');
+                    signInUser('+$number', context);
                         bottom( context);
                         errorcode=2;
                       });
@@ -157,7 +162,7 @@ setState(() {
                 onTap: (){
                   if(textField==true){
 
-                    signInUser('+$number');
+                    signInUser('+$number', context);
                     bottom( context);
                   }
                 },
@@ -216,7 +221,6 @@ setState(() {
 
 
 
-
 Widget errortext(int? errorC){
   bool textField=false;
   if(errorC==0){
@@ -228,42 +232,75 @@ textField=true;
     return textField ? Text('Phone number should be 12 digits long inclusive of country code!',
 
       style: TextStyle(
-        color: Colors.red,
+        color: error,
         fontWeight: FontWeight.w700,
-        fontSize: 14,
+        fontSize: 10,
       ),
     )
         : SizedBox();
   }
 
-signInUser(String phoneNumber) async{
-   print('hello timmy');
+
+
+signInUser(String phoneNumber , BuildContext  context) async{
+
   try {
     await auth.verifyPhoneNumber(
+
       phoneNumber: phoneNumber,
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential);
+        //TODO: implement auto signing
       },
+      //TODO: Ask the user to check for a connection.
       verificationFailed: (e) {
       },
       codeSent:  (String verificationId, int? resendToken) async {
         streamDuration.pause();
+        /*
+        *  showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Stack(
+                children: [
+                  ModalBarrier(
+                    color: black.withOpacity(0.4),
+                  ),
+                  AlertDialog(
+                    backgroundColor: transparent,
+                    content: SimpleCircularProgressBar(
+                      size: 50,
+                      progressStrokeWidth: 5,
+                      backStrokeWidth: 8,
+                      mergeMode: true,
+                      progressColors: const [seedBlue],
+                      backColor: Colors.black.withOpacity(0.4),
+                      animationDuration: 3,
+                    ),
+                  ),
+                ]
+            );
+          },
+        );*/
+
         while(otpflag==false){
           await Future.delayed(Duration(seconds:5));
           checkTextFieldStatus();
               if(otpflag){
-                //TODO:handle an erroneous otp
                 String smsCode = updatesmsCode();
                 PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-                await auth.signInWithCredential(credential);
-                //TODO:sign in user
-                break;
+                UserCredential userCredential = await auth.signInWithCredential(credential);
+                User? user=userCredential.user;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => entry()),
+                );
               }
         }
       },
       codeAutoRetrievalTimeout: (String verificationId) {
-        print('hellosdclicnlqlwc');
+
       },);
   }
   catch(e){}
@@ -362,7 +399,9 @@ Row(
                           height: 15,
                         ),
                         Center(
-                          child: ElevatedButton(onPressed: (){}, child: Text(
+                          child: ElevatedButton(onPressed: (){
+retry(ctx);
+                          }, child: Text(
                             'RETRY',
                             style: TextStyle(
                               color: white
@@ -382,6 +421,18 @@ Row(
           ),
         ));
   }
+
+void retry(BuildContext context){
+  signInUser('+$number', context);
+  _fieldOne.clear();
+  _fieldTwo.clear();
+  _fieldThree.clear();
+  _fieldFour.clear();
+  _fieldFive.clear();
+  _fieldSix.clear();
+
+}
+
 
 
 class OtpInput extends StatelessWidget {

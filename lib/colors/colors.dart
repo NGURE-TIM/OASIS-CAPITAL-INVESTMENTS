@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const Color seedBlue=  Color(0xFF0069b0);
+const Color mainBlue = Color(0xFF34445C);
+const Color mainOrange=Color(0xFFFF9900);
 const Color black=Colors.black;
 const Color grey=Colors.grey;
 const Color Blue=  Color(0xFF151c4a);

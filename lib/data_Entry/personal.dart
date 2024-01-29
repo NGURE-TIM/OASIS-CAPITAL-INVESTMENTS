@@ -1,10 +1,10 @@
+
 import 'package:fulusi/colors/colors.dart';
 import 'dataEntryWidgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'contract.dart';
+import 'contacts.dart';
 late String Education='x';
 late String Jobstatus='x';
-
 late String Profession='x';
 late String Salary='x';
 late String Maritalstatus='x';
@@ -28,7 +28,15 @@ onComplete(){
 
 
 class Personal extends StatefulWidget {
-  const Personal({Key? key}) : super(key: key);
+  String Firstname;
+  String Middlename;
+  String Lastname;
+  String ID;
+  String DOB;
+  String Gender;
+  //User? user;
+  Personal( this. Firstname , this.Middlename , this.Lastname , this.ID , this.DOB , this.Gender);
+
 
   @override
   State<Personal> createState() => _entryState();
@@ -127,9 +135,10 @@ class _entryState extends State<Personal> {
 
     onComplete();
     if(Complete){
+
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Contract()),
+    MaterialPageRoute(builder: (context) => Contact(widget.Firstname,widget.Middlename,widget.Lastname ,widget.ID,widget.DOB,widget.Gender, Education,Jobstatus,Profession,Salary,Maritalstatus)),
     );
     }
     else{

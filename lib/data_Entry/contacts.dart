@@ -1,21 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'dataEntryWidgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:flutter_dropdown_search/flutter_dropdown_search.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 
-late String relationship1='x';
-late String phoneNumber1='x';
-late String relationship2='x';
-late String phoneNumber2='x';
+
+late String  phoneNumber1='x';
+late String  phoneNumber2='x';
+
+List<String> family =['Father', 'Mother', 'Sister', 'Brother'];
+final TextEditingController _controller1=TextEditingController();
+final TextEditingController _controller2=TextEditingController();
 
 bool Complete=false;
 bool buttonIsPressed=false;
 onComplete(){
-  if (relationship1 != 'x' &&
-      phoneNumber1 != 'x' &&
-      relationship2 != 'x' &&
-      phoneNumber2 != 'x' ){
+  if ( phoneNumber1 != 'x' &&
+      _controller1.text != 'x' &&
+      phoneNumber2 != 'x' &&
+      _controller2.text!= 'x' ){
     Complete=true;
   }
   else{
@@ -24,15 +32,69 @@ onComplete(){
 }
 
 
-class Contract extends StatefulWidget {
-  const Contract({Key? key}) : super(key: key);
+class Contact extends StatefulWidget{
+ String Firstname;
+ String Middlename;
+String Lastname;
+ String ID;
+ String DOB;
+ String Gender;
+ String Education;
+ String Jobstatus;
+ String Profession;
+ String Salary;
+ String Maritalstatus;
+
+  //User? user;
+ Contact(this.Firstname,this.Middlename,this.Lastname ,this.ID,this.DOB,this.Gender,this.Education,this.Jobstatus,this.Profession,this.Salary, this.Maritalstatus );
 
   @override
-  State<Contract> createState() => _entryState();
+  State<Contact> createState() => _entryState();
 }
 
-class _entryState extends State<Contract> {
+class _entryState extends State<Contact> {
+  String?  relationship1= _controller1.text;
+  String?  relationship2 =_controller2.text;
+ FirebaseFirestore db =FirebaseFirestore.instance;
+   void pushToDb()async{
+try{
+  await db.collection('userData').add({
+
+    "Firstname":widget.Firstname,
+    "Middlename":widget.Middlename,
+    " Lastname":widget.Lastname,
+    "ID":widget.ID,
+    " DOB":widget.DOB,
+    " Gender":widget.Gender,
+    " Education":widget.Education,
+    "Jobstatus":widget.Jobstatus,
+    " Profession":widget.Profession,
+    "Salary":widget.Salary,
+    "Maritalstatus":widget.Maritalstatus,
+    "contact person1":{
+      " relationship1":relationship1,
+      "phoneNumber1 ":phoneNumber1,
+    },
+    "contact person12":{
+      " relationship2":relationship2,
+      "phoneNumber2 ":phoneNumber2
+    }
+
+  });
+}
+catch(e){
+  print(e);
+}
+
+
+
+   }
+
   @override
+  void initState() {
+    super.initState();
+  //  ref = FirebaseDatabase.instance.ref().child('сhats');
+  }
 
   Widget build(BuildContext context) {
     return  SafeArea(child:Scaffold(
@@ -80,17 +142,13 @@ class _entryState extends State<Contract> {
                 height: 30,
               ),
 
-              contactTextfields('Contact 1','Relationship' , (value){
-                relationship1=value as String;
-              },(value){
+              contactTextfields('Contact 1','Relationship' ,_controller1,(value){
                 phoneNumber1=value;
               }      )  ,
               SizedBox(
                 height: 15,
               ),
-              contactTextfields(  'Contact 2','Relationship',(value){
-                relationship2=value ;
-              },(value){
+              contactTextfields(  'Contact 2','Relationship',_controller2,(value){
                 phoneNumber2=value;
               }  ),
 
@@ -119,10 +177,11 @@ class _entryState extends State<Contract> {
               Container(
                 height: 60,
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){
+                child: ElevatedButton(onPressed: ()async{
                   onComplete();
                   if(Complete){
-                    print('pushing into firebase $relationship1');
+                    print('jn');
+pushToDb();
                   }
                   else{
                     setState(() {
@@ -160,9 +219,9 @@ class contactTextfields extends StatelessWidget {
 
   String contact;
   String relationship;
-  Function (dynamic) onChanged;
+  TextEditingController _controller;
   Function (String) onChanged2;
-  contactTextfields(this.contact,this.relationship  , this.onChanged , this.onChanged2);
+  contactTextfields(this.contact,this.relationship  , this._controller , this.onChanged2);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -191,7 +250,8 @@ class contactTextfields extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        DropDownTextField(
+        /* DropDownTextField(
+          dropdownRadius: 40,
           dropdownColor: white,
           isEnabled: true,
           clearOption: false,
@@ -227,6 +287,19 @@ class contactTextfields extends StatelessWidget {
 
           ],
           onChanged: onChanged,
+        ),*/
+        FlutterDropdownSearch(
+          hintText: 'Select relationship',
+          textController:_controller,
+          items: family,
+          dropdownHeight: 100,
+          dropdownBgColor: white,
+suffixIcon: Icons.arrow_drop_down_circle ,
+textFieldBorder:  OutlineInputBorder(
+    borderRadius :BorderRadius.all(Radius.circular(10)),
+    borderSide:  BorderSide(
+    color: grey, width: 2.0),
+    ),
         ),
         SizedBox(
           height: 5,

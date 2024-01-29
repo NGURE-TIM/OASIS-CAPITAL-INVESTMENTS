@@ -3,6 +3,7 @@ import 'package:fulusi/colors/colors.dart';
 import 'dataEntryWidgets/widgets.dart';
 import 'package:fulusi/data_Entry/personal.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 late String Firstname='x';
 late String Middlename='x';
@@ -30,13 +31,14 @@ onComplete(){
 
 
 class entry extends StatefulWidget {
-  const entry({Key? key}) : super(key: key);
 
   @override
   State<entry> createState() => _entryState();
 }
 
 class _entryState extends State<entry> {
+
+
   @override
 
   Widget build(BuildContext context) {
@@ -131,35 +133,12 @@ style:TextStyle(
                  child: ElevatedButton(onPressed: ()async{
                    onComplete();
                    if(Complete){
-                     /* showDialog(
-                       context: context,
-                       builder: (BuildContext context) {
-                         return Stack(
-                             children: [
-                               ModalBarrier(
-                                 color: black.withOpacity(0.4),
-                               ),
-                               AlertDialog(
-                                 backgroundColor: transparent,
-                                 content: SimpleCircularProgressBar(
-                                   size: 50,
-                                   progressStrokeWidth: 5,
-                                   backStrokeWidth: 8,
-                                   mergeMode: true,
-                                   progressColors: const [seedBlue],
-                                   backColor: Colors.black.withOpacity(0.4),
-                                   animationDuration: 3,
-                                 ),
-                               ),
-                             ]
-                         );
-                       },
-                     );
+                     /*
                      */
 
                      Navigator.push(
                        context,
-                       MaterialPageRoute(builder: (context) => Personal()),
+                       MaterialPageRoute(builder: (context) => Personal( Firstname , Middlename , Lastname , ID , DOB , Gender)),
                      );
                    }
                    else{
