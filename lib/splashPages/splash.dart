@@ -13,8 +13,8 @@ class Splash extends StatelessWidget {
     return  FlutterSplashScreen.fadeIn(
       backgroundColor: white,
       childWidget: SizedBox(
-        height: 400,
-        width: 400,
+        height: 300,
+        width: 300,
         child: Image.asset("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
       ),
       duration: const Duration(milliseconds: 5515),

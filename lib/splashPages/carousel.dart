@@ -1,10 +1,13 @@
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
+import 'package:fulusi/data_Entry/account_Info.dart';
 import 'package:fulusi/data_Entry/entry.dart';
 import 'package:fulusi/logins/login_screens/register/register.dart';
 
 import '../globalWidgets.dart';
+
+//bool phoneNumber verified
 
 
 class Carousel extends StatelessWidget {
@@ -89,25 +92,22 @@ class Carousel extends StatelessWidget {
               }).toList(),
             ),
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
              Row(
                mainAxisAlignment: MainAxisAlignment.center,
                children: [
-                 ElavatedButton('Member ?' , white ,mainOrange , (){Navigator.push(
+                 ElavatedButton('Member ' , white ,mainBlue   , (){Navigator.push(
                    context,
                    MaterialPageRoute(builder: (context) => Verify()),
                  );}),
                  const SizedBox(
-                   width:10
+                   width:15
                  ),
-                 ElavatedButton('New user' , white, mainBlue,(){Navigator.push(
+                 ElavatedButton('New user' , white, mainOrange,(){Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => entry()),
+                   MaterialPageRoute(builder: (context) => const AccountInfo()),
                  );}),
-
-
-
 
                ],
              ),

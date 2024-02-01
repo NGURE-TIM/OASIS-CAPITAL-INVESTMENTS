@@ -13,16 +13,38 @@ class ElavatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed:onPressed,
-      style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      style:
+
+      ElevatedButton.styleFrom(
+    fixedSize: Size(150, 45),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           elevation: 3, backgroundColor: bodyColor
       ), child: Text(
         text,
         style: TextStyle(
             color: textColor,
-                fontSize: 12
+                fontSize:17
         ),
+      ),
+    );
+  }
+}
+
+class TextWidget extends StatelessWidget {
+  FontWeight? weight;
+
+  Color textColor;
+  String textBody;
+
+  TextWidget(this.textBody,this.weight,this.textColor);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(textBody,
+      style: TextStyle(
+        color:textColor,
+        fontWeight: weight,
+        fontSize: 20,
       ),
     );
   }

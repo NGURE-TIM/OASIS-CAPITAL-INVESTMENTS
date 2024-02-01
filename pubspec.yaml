@@ -47,6 +47,8 @@ dependencies:
   flutter_dropdown_search: ^0.0.4
   firebase_database: ^10.4.0
   flutter_carousel_widget: ^2.2.0
+  flutter_svg_provider: ^1.0.6
+  flutter_spinkit: ^5.2.0
 
 
 dev_dependencies:
@@ -74,6 +76,22 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/account_Info/Photo/undraw_pic_profile_re_7g2h.svg
+    - assets/images/account_Info/Phone Number/Calling-amico.svg
+    - assets/images/account_Info/Phone Number/undraw_contact_us_re_4qqt.svg
+    - assets/images/account_Info/Name/undraw_inspection_re_tbt7.svg
+    - assets/images/account_Info/Name/Men talking-pana (1).svg
+    - assets/images/account_Info/Income/undraw_revenue_re_2bmg.svg
+    - assets/images/account_Info/Income/Money income.gif
+    - assets/images/account_Info/Id Number/undraw_profile_re_4a55.svg
+    - assets/images/account_Info/Id image/undraw_profile_re_4a55.svg
+    - assets/images/account_Info/Id image/ID Card-cuate.svg
+    - assets/images/account_Info/Email and password/undraw_personal_email_re_4lx7 (1).svg
+    - assets/images/account_Info/Email and password/Email capture.gif
+    - assets/images/account_Info/Education Level/undraw_education_f8ru.svg
+    - assets/images/account_Info/Code/undraw_referral_re_0aji.svg
+    - assets/images/account_Info/Account info/Forms-cuate.svg
+    - assets/images/account_Info/Account info/undraw_my_personal_files_re_3q0p.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
