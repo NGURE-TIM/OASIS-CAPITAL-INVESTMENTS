@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import '../globalWidgets.dart';
+import 'package:provider/provider.dart';
 import '../logins/login_screens/register/register.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fulusi/stateManagement_provider/provider.dart';
+import 'name.dart';
+
+
 
 final TextEditingController _fieldOne = TextEditingController();
 final TextEditingController _fieldTwo = TextEditingController();
@@ -21,6 +26,8 @@ class Referral extends StatefulWidget {
 }
 
 class _ReferralState extends State<Referral> {
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +68,44 @@ class _ReferralState extends State<Referral> {
                     OtpInput(_fieldTwo,2),
                     OtpInput(_fieldThree,3),
                     OtpInput(_fieldFour,4),
+
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Center(
-                  child: ElavatedButton('Continue' , white, mainOrange,(){
-                    checkReferral('123');
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Verify()),
-                  );}),
+                  child: Consumer<Code>(
+                      builder:(context,dataProviderModel,child){
+                       return
+                         dataProviderModel.wrongCode? const Text('Double-check your entry. The provided code is either incorrect or non-existent',
+                           style:TextStyle(
+                             color:error,
+                             fontWeight: FontWeight.w600,
+                             fontSize: 15,
+                           ),
+                         )
+                       :
+                             const SizedBox();
+
+                      } ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Consumer<Code>(
+                      builder:(context,dataProviderModel,child){
+                        return
+                 ElavatedButton('Continue' , white, dataProviderModel.successfulCode?mainOrange:mainBlue,(){
+                   if(dataProviderModel.successfulCode){
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) =>  const Name()),
+                     );
+                   }
+                    });
+  } ),
                 ),
               ],
             ),
@@ -80,6 +113,8 @@ class _ReferralState extends State<Referral> {
         )
     ));
   }
+
+
 }
 
 
@@ -122,11 +157,12 @@ class OtpInput extends StatelessWidget {
           if(value.length==1){
             FocusScope.of(context).nextFocus();
             if(otpNumber==1){
-              checkTextFieldStatus();
+              checkTextFieldStatus(context);
             }
           }
         },
         onEditingComplete: (){
+         textFieldStatusComplete();
         },
       ),
     );
@@ -134,20 +170,87 @@ class OtpInput extends StatelessWidget {
 }
 
 bool textFieldStatus =false;
-void checkTextFieldStatus()async{
+void checkTextFieldStatus(BuildContext context)async{
   while(textFieldStatus ==false){
-    await Future.delayed(const Duration(seconds:5));
+    await Future.delayed(const Duration(seconds:4));
    textFieldStatusComplete();
-   if (textFieldStatus){
-    String code=textFieldStatusComplete();
-     print(code);
-     checkReferral(code);
-   }
+   if (textFieldStatus && context.mounted) {
 
+    String code=textFieldStatusComplete();
+
+    buildShowProgress(context);
+    checkReferral(code , context);
+   }}}
+
+
+checkReferral (String code ,BuildContext context )async{
+  try{
+    CollectionReference collection=FirebaseFirestore.instance.collection('referralCode');
+    QuerySnapshot snapshot=await collection.where('code', isEqualTo: code).get();
+
+    if (snapshot.docs.isNotEmpty && context.mounted){
+
+      Provider.of<Code>(context , listen: false).dbCall();
+
+    }
+    else if(snapshot.docs.isEmpty &&context.mounted){
+
+      Provider.of<Code>(context , listen: false).wrong();
+
+
+wrongCode();
+      await Future.delayed(const Duration(seconds:3));
+      Provider.of<Code>(context , listen: false).turnWrongON();
+
+    }
+  }
+  catch(e){
+    //TODO :HANDLE ERRORS LIKE NO INTERNET CONNECTION , CONGESTED DB
   }
 
 }
 
+void wrongCode(){
+  _fieldOne.clear();
+  _fieldTwo.clear();
+  _fieldThree.clear();
+  _fieldFour.clear();
+  textFieldStatus=false;
+
+}
+
+Future<dynamic> buildShowProgress(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+
+      return Consumer<Code>(
+          builder:(context,dataProviderModel,child){
+            if( dataProviderModel.successfulCode || dataProviderModel.wrongCode ) {
+              Navigator.of(context).pop();
+            }
+       return Stack(
+            children: [
+              ModalBarrier(
+                color:  black.withOpacity(.4),
+              ),
+               const AlertDialog(
+elevation: 0,
+                shadowColor: null,
+                  backgroundColor: transparent,
+                  content:SpinKitPouringHourGlassRefined(color: mainOrange,size: 60,
+                    duration: Duration(seconds: 2),
+                  ),
+
+
+
+              ),
+            ]
+        );
+    });
+    },
+  );
+}
 
 String textFieldStatusComplete() {
   bool all = _fieldOne.text.isNotEmpty &&
@@ -168,19 +271,4 @@ String textFieldStatusComplete() {
 
 
 
-  checkReferral (String code)async{
-  try{
-    CollectionReference collection=FirebaseFirestore.instance.collection('referralCode');
-    QuerySnapshot snapshot=await collection.where('code', isEqualTo: code).get();
-    if (snapshot.docs.isNotEmpty){
-      print(code);
-    }
-   else{
-      print ('sucker');
-    }
-  }
-  catch(e){
-    print(e);
-  }
 
-  }

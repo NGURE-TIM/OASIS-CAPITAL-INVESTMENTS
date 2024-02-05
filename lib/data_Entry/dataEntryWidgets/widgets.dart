@@ -108,3 +108,39 @@ class TextFields extends StatelessWidget {
     );
   }
 }
+
+
+
+Container buildTextField( String name) {
+
+  return Container(
+    width: 300,
+    child: TextField(
+      onChanged: (value){
+        name=value;
+      },
+      cursorColor: white,
+      keyboardType: TextInputType.name,
+      style:const TextStyle(
+          fontSize:25,
+          color: black
+      ),
+      decoration:const InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: black), // Set the color you want
+        ),
+        enabledBorder: UnderlineInputBorder(
+
+          borderSide: BorderSide(color: black), // Set the color you want
+        ),
+
+        hintText: 'John Doe',
+        hintStyle:TextStyle(
+            fontWeight: FontWeight.w200,
+            color: grey
+        ) ,
+        filled: false,
+      ) ,
+    ),
+  );
+}
