@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'colors/colors.dart';
+
 class ElavatedButton extends StatelessWidget {
  Function() onPressed ;
   String text;
@@ -48,4 +50,20 @@ class TextWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+
+
+Widget buildDivider(double? width) {
+  return Padding(
+    padding:  const EdgeInsets.all(1.0),
+    child: SizedBox(
+      width: width,
+      child: const Divider(
+        color: grey,
+        thickness: 3,
+        height: 5,
+      ),
+    ),
+  );
 }

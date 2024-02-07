@@ -6,15 +6,15 @@ import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
 
 
-class Name extends StatefulWidget {
+class Birthday extends StatefulWidget {
 
-  const Name({Key? key}) : super(key: key);
+  const Birthday({Key? key}) : super(key: key);
 
   @override
-  State<Name> createState() => _NameState();
+  State<Birthday> createState() => _BirthdayState();
 }
 
-class _NameState extends State<Name> {
+class _BirthdayState extends State<Birthday> {
   late String name ;
   @override
   Widget build(BuildContext context) {
@@ -30,20 +30,20 @@ class _NameState extends State<Name> {
                   child: Image(
                     width: 400,
                     height: 400,
-                    image: Svg('assets/images/account_Info/Name/Men talking-pana (1).svg'),
+                    image: Svg('assets/images/account_Info/DOB/Calendar-rafiki.svg'),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextWidget('Your full name',
+                TextWidget('Date of birth',
                   FontWeight.w700,
                   mainBlue,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextWidget('Please type in your full name e.g John Doe.',
+                TextWidget('Please pick your date of birth.',
                   FontWeight.w400,
                   grey,
                 ),
@@ -56,25 +56,25 @@ class _NameState extends State<Name> {
                 const SizedBox(
                   height: 50,
                 ),
-      Center(
-          child: ElavatedButton('Continue' , white, mainOrange,(){
-            try{
-             if(name.isNotEmpty){
-               Navigator.push(
-                 context,
-                 MaterialPageRoute(builder: (context) =>  const Photo()),
-               );
-             }
+                Center(
+                  child: ElavatedButton('Continue' , white, mainOrange,(){
+                    try{
+                      if(name.isNotEmpty){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  const Photo()),
+                        );
+                      }
 
 
-            }
-            catch(e){
-              // TODO:HANDLE INSTANCE WHERE USER TRIES TO PROCEED WITHOUT TYPING IN NAME---ACCESS OF NAME VARIABLE WHERE ITS DOESN'T EXIST
-            }
+                    }
+                    catch(e){
+                      // TODO:HANDLE INSTANCE WHERE USER TRIES TO PROCEED WITHOUT TYPING IN NAME---ACCESS OF NAME VARIABLE WHERE ITS DOESN'T EXIST
+                    }
 
 
-          }),
-      )
+                  }),
+                )
 
 
               ],
@@ -85,8 +85,5 @@ class _NameState extends State<Name> {
   }
 
 }
-
-
-
 
 

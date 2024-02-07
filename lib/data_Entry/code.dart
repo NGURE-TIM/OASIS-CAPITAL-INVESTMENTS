@@ -1,12 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import '../Database/firebase.dart';
 import '../globalWidgets.dart';
 import 'package:provider/provider.dart';
-import '../logins/login_screens/register/register.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:fulusi/stateManagement_provider/provider.dart';
 import 'name.dart';
 
@@ -183,32 +184,6 @@ void checkTextFieldStatus(BuildContext context)async{
    }}}
 
 
-checkReferral (String code ,BuildContext context )async{
-  try{
-    CollectionReference collection=FirebaseFirestore.instance.collection('referralCode');
-    QuerySnapshot snapshot=await collection.where('code', isEqualTo: code).get();
-
-    if (snapshot.docs.isNotEmpty && context.mounted){
-
-      Provider.of<Code>(context , listen: false).dbCall();
-
-    }
-    else if(snapshot.docs.isEmpty &&context.mounted){
-
-      Provider.of<Code>(context , listen: false).wrong();
-
-
-wrongCode();
-      await Future.delayed(const Duration(seconds:3));
-      Provider.of<Code>(context , listen: false).turnWrongON();
-
-    }
-  }
-  catch(e){
-    //TODO :HANDLE ERRORS LIKE NO INTERNET CONNECTION , CONGESTED DB
-  }
-
-}
 
 void wrongCode(){
   _fieldOne.clear();

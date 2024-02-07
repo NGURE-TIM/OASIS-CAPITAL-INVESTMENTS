@@ -111,21 +111,21 @@ class TextFields extends StatelessWidget {
 
 
 
-Container buildTextField( String name) {
+Container buildTextField(  Function(String)onChanged , String label,String hint ,TextInputType type  ) {
 
   return Container(
     width: 300,
     child: TextField(
-      onChanged: (value){
-        name=value;
-      },
+      onChanged: onChanged,
+
       cursorColor: white,
-      keyboardType: TextInputType.name,
+      keyboardType: type,
       style:const TextStyle(
-          fontSize:25,
-          color: black
+          fontSize:20,
+          color: Colors.black,
+          fontWeight: FontWeight.w300
       ),
-      decoration:const InputDecoration(
+      decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: black), // Set the color you want
         ),
@@ -134,7 +134,7 @@ Container buildTextField( String name) {
           borderSide: BorderSide(color: black), // Set the color you want
         ),
 
-        hintText: 'John Doe',
+        hintText: hint,
         hintStyle:TextStyle(
             fontWeight: FontWeight.w200,
             color: grey

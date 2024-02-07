@@ -21,6 +21,7 @@ Widget build(BuildContext context) {
 return MultiProvider(
   providers:[
     ChangeNotifierProvider(create: (context)=>Code()),
+    ChangeNotifierProvider(create: (context)=>Photo()),
   ],
   child:   MaterialApp(
   debugShowCheckedModeBanner: false,

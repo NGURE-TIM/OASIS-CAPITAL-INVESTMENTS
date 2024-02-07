@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:io';
 class Code extends ChangeNotifier{
   bool successfulCode =false;
   bool wrongCode=false;
@@ -15,5 +15,15 @@ class Code extends ChangeNotifier{
     wrongCode=false;
     notifyListeners();
   }
+
 }
+
+
+class Photo extends ChangeNotifier{
+
+
+
+}
+
+
 
