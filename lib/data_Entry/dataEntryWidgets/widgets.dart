@@ -111,13 +111,13 @@ class TextFields extends StatelessWidget {
 
 
 
-Container buildTextField(  Function(String)onChanged , String label,String hint ,TextInputType type  ) {
+Container buildTextField(  Function(String)onChanged , String label,String hint ,TextInputType type , TextEditingController controller  ) {
 
   return Container(
     width: 300,
     child: TextField(
       onChanged: onChanged,
-
+controller: controller,
       cursorColor: white,
       keyboardType: type,
       style:const TextStyle(

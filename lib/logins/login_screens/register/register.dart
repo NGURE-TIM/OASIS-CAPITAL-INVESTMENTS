@@ -7,6 +7,8 @@ import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:fulusi/data_Entry/entry.dart';
 
+import '../../../globalWidgets.dart';
+
 
  int phoneNumber = 0;
  int? errorcode=2;
@@ -68,150 +70,213 @@ class _VerifyState extends State<Verify> {
      super.initState();
      streamDuration;
    }
-@override
-void dispose(){
-     super.dispose();
-     phoneNumberController.dispose();
-     _fieldOne.dispose();
-     _fieldTwo.dispose();
-     _fieldThree.dispose();
-     _fieldFour.dispose();
-     _fieldFive.dispose();
-     _fieldSix.dispose();
-     streamDuration.dispose();
 
-}
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Scaffold(
-        backgroundColor:seedBlue,
-        body: SingleChildScrollView(
-          child: Column(
+    final Size screensize=MediaQuery.of(context).size;
+    return  Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          width: screensize.width,
+          height: screensize.height,
+          child: Stack(
             children: [
-              Container(
-                height: 200,
-              ),
-              const Align(
-                alignment: Alignment(-0.6, 0.0),
-                child: Text(
-                  'Getting started',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize:30
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height:50,
+              Image.asset(
+                'assets/images/photorealistic-money-with-plant_23-2151027561.webp',
+                width: screensize.width,
+                height: screensize.height,
+                fit: BoxFit.cover,
               ),
               Container(
-                width: 300,
-                child: TextField(
-                  onChanged: (value){
-                    phoneNumber=int.tryParse(value)??0 ;
-                    number=phoneNumber.toString();
-                    if(number.length==12){
-                      setState(() {
-                        textField=true;
-                    signInUser('+$number', context);
-                        bottom( context);
-                        errorcode=2;
-                      });
-                    }
-                    else if(number.length!=12){
-                       textField=false;
-setState(() {
-  errorcode=0;
-});
-                    }
-                  },
-                  cursorColor: white,
-                  controller: phoneNumberController,
-                  keyboardType: TextInputType.phone,
-                  style:const TextStyle(
-                      fontSize:25,
-                      color: white
+                decoration: BoxDecoration(
+
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: const Alignment(0.0 ,0.55),
+                    colors: [
+                      Colors.transparent,
+                      black.withOpacity(1), // Adjust opacity as needed
+                    ],
                   ),
-                  decoration:const InputDecoration(
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: white), // Set the color you want
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-
-                      borderSide: BorderSide(color: white), // Set the color you want
-                    ),
-
-                    labelText: 'Phone Number',
-                    labelStyle:TextStyle(
-                        fontWeight: FontWeight.w100,
-                        color: white
-                    ) ,
-                    filled: false,
-                  ) ,
                 ),
-              ),
-              const SizedBox(
-                height:5,
-              ),
-              errortext(errorcode),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: (){
-                  if(textField==true){
-
-                    signInUser('+$number', context);
-                    bottom( context);
-                  }
-                },
-
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius:BorderRadius.circular(12) ,
-                    color: orange,
-                  ) ,
-
-                  height: 50,
-                  width:250 ,
-                  child: Center(
-                    child: Text(
-                      'CONTINUE',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600
+                width: screensize.width,
+                height: screensize.height,
+                child:
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 100,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 220,
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
-
-                  child:    RichText(
-
-                    text: TextSpan(
-                      text: 'By clicking continue, i ascertain i have read the ',
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Terms and Conditions ',
+                      SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Image.asset("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
+                      ),
+                      const Center(
+                        child: Text(
+                          'Your trusted partners.',
                           style: TextStyle(
-                            fontSize: 15,
-                            decoration: TextDecoration.underline,
+                            color: white,
+                              fontWeight: FontWeight.w400,
+                              fontSize:30
                           ),
                         ),
-                        TextSpan(
-                          text: 'and that the keyed in phone number is mine and the M-pesa account associated with it.',
+                      ),
+                      const SizedBox(
+                        height:10,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 60,right: 60),
+                        child: Text(
+                          'Please verify your phone number to proceed',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: white,
+
+                              fontWeight: FontWeight.w300,
+                              fontSize:18
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height:50,
+                      ),
+                      Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: white,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElavatedButton('Mobile phone' , white, mainBlue,() {
+
+                            },3),
+                            ElavatedButton('Email' , mainOrange, white,() {
+
+                            },0),
+                          ],
+                        ),
+                        ),
+                      const SizedBox(
+                        height:30,
+                      ),
+                      Container(
+                        width: 300,
+                        child: TextField(
+                          onChanged: (value){
+                            phoneNumber=int.tryParse(value)??0 ;
+                            number=phoneNumber.toString();
+                            if(number.length==12){
+                              setState(() {
+                                textField=true;
+                                signInUser('+$number', context);
+                                bottom( context);
+                                errorcode=2;
+                              });
+                            }
+                            else if(number.length!=12){
+                              textField=false;
+                              setState(() {
+                                errorcode=0;
+                              });
+                            }
+                          },
+                          cursorColor: white,
+                          controller: phoneNumberController,
+                          keyboardType: TextInputType.phone,
+                          style:const TextStyle(
+                              fontSize:25,
+                              color: white
+                          ),
+                          decoration:const InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: white), // Set the color you want
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+
+                              borderSide: BorderSide(color: white), // Set the color you want
+                            ),
+
+                            labelText: 'Phone Number',
+                            labelStyle:TextStyle(
+                                fontWeight: FontWeight.w100,
+                                color: white
+                            ) ,
+                            filled: false,
+                          ) ,
+                        ),
+                      ),
+                      const SizedBox(
+                        height:5,
+                      ),
+                      errortext(errorcode),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          if(textField==true){
+
+                            signInUser('+$number', context);
+                            bottom( context);
+                          }
+                        },
+
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:BorderRadius.circular(12) ,
+                            color: orange,
+                          ) ,
+
+                          height: 50,
+                          width:250 ,
+                          child: Center(
+                            child: Text(
+                              'Sign in',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w600
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 220,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
+
+                        child:    RichText(
+
+                          text: TextSpan(
+                            text: 'By clicking continue, i ascertain i have read the ',
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Terms and Conditions ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'and that the keyed in phone number is mine and the M-pesa account associated with it.',
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
+                ),
               )
+
             ],
+
           ),
         ),
       ),

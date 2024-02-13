@@ -3,7 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../data_Entry/code.dart';
+import '../globalWidgets.dart';
 import '../stateManagement_provider/provider.dart';
+import 'package:fulusi/data_Entry/dob.dart';
+import 'package:fulusi/data_Entry/emailandPhone.dart';
+import 'package:fulusi/data_Entry/income.dart';
+import 'package:fulusi/data_Entry/name.dart';
+import 'package:fulusi/data_Entry/photo.dart';
+import 'dart:convert';
 //this function gets  checks the referral code
 checkReferral (String code ,BuildContext context )async{
   try{
@@ -29,5 +36,30 @@ checkReferral (String code ,BuildContext context )async{
   catch(e){
     //TODO :HANDLE ERRORS LIKE NO INTERNET CONNECTION , CONGESTED DB
   }
+}
 
+FirebaseFirestore db =FirebaseFirestore.instance;
+ pushToDb(BuildContext context)async{
+  Provider.of<Code>(context , listen: false).reset();
+    buildShowProgress(context);
+  try{
+    await db.collection('userData').add({
+      "Full name":name,
+      "National id number":id,
+      "Phone number":phoneNumber,
+      "Email":email,
+      " Date of birth":selectedDate ,
+      " Education":educationLevel,
+      "Salary":wageLevel,
+      //TODO :HANDLE lARGE IMAGE SIZE
+    });
+await Provider.of<Code>(context , listen: false).dbCall();
+    await Future.delayed(const Duration(milliseconds: 100));
+    navigate(context);
+
+  }
+
+  catch(e){
+    print(e);
+  }
 }

@@ -8,6 +8,8 @@ import 'dart:io';
 
 import 'contacts.dart';
 import 'emailandPhone.dart';
+
+File? image;
 class Photo extends StatefulWidget {
 
   const Photo({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class Photo extends StatefulWidget {
 
 class _PhotoState extends State<Photo> {
 
-   static File? image;
+
    static final picker=ImagePicker();
 
 
@@ -98,7 +100,7 @@ class _PhotoState extends State<Photo> {
                                                 (XFile? pickedImage){
                                               if(pickedImage != null){
                                                 setState(() {
-                                                  _PhotoState.image=File(pickedImage.path);
+                                                 image=File(pickedImage.path);
                                                 });
 
                                               }
@@ -112,7 +114,7 @@ class _PhotoState extends State<Photo> {
                                         openImagePicker(ImageSource.gallery,(XFile? pickedImage){
                                           if(pickedImage != null){
                                             setState(() {
-                                              _PhotoState.image=File(pickedImage.path);
+                                              image=File(pickedImage.path);
                                             });
 
                                           }
@@ -156,7 +158,7 @@ class _PhotoState extends State<Photo> {
                       context,
                       MaterialPageRoute(builder: (context) =>   const Contacts()),
                     );
-                  }),
+                  },3),
                   const SizedBox(
                       width:15
                   ),
@@ -168,7 +170,7 @@ class _PhotoState extends State<Photo> {
                         MaterialPageRoute(builder: (context) =>  const Contacts()),
                       );
                     }
-                  }),
+                  },3),
 
 
                 ],

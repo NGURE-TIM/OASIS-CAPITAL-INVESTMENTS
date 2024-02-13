@@ -5,9 +5,6 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import '../Database/firebase.dart';
 import '../globalWidgets.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:fulusi/stateManagement_provider/provider.dart';
 import 'name.dart';
 
@@ -105,7 +102,7 @@ class _ReferralState extends State<Referral> {
                        MaterialPageRoute(builder: (context) =>  const Name()),
                      );
                    }
-                    });
+                    },3);
   } ),
                 ),
               ],
@@ -173,7 +170,7 @@ class OtpInput extends StatelessWidget {
 bool textFieldStatus =false;
 void checkTextFieldStatus(BuildContext context)async{
   while(textFieldStatus ==false){
-    await Future.delayed(const Duration(seconds:4));
+    await Future.delayed(const Duration(milliseconds: 100));
    textFieldStatusComplete();
    if (textFieldStatus && context.mounted) {
 
@@ -194,38 +191,7 @@ void wrongCode(){
 
 }
 
-Future<dynamic> buildShowProgress(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
 
-      return Consumer<Code>(
-          builder:(context,dataProviderModel,child){
-            if( dataProviderModel.successfulCode || dataProviderModel.wrongCode ) {
-              Navigator.of(context).pop();
-            }
-       return Stack(
-            children: [
-              ModalBarrier(
-                color:  black.withOpacity(.4),
-              ),
-               const AlertDialog(
-elevation: 0,
-                shadowColor: null,
-                  backgroundColor: transparent,
-                  content:SpinKitPouringHourGlassRefined(color: mainOrange,size: 60,
-                    duration: Duration(seconds: 2),
-                  ),
-
-
-
-              ),
-            ]
-        );
-    });
-    },
-  );
-}
 
 String textFieldStatusComplete() {
   bool all = _fieldOne.text.isNotEmpty &&

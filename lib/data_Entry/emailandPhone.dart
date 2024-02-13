@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fulusi/data_Entry/dob.dart';
-import 'package:fulusi/data_Entry/photo.dart';
+
 import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
-import 'package:gif_view/gif_view.dart';
 
+TextEditingController emailController =TextEditingController();
+TextEditingController phoneNumberController = TextEditingController(text: '+254');
+late String phoneNumber ;
+late String email;
 class Contacts extends StatefulWidget {
 
   const Contacts({Key? key}) : super(key: key);
@@ -16,8 +19,7 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
-  late String phoneNumber ;
-  late String email;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -58,7 +60,7 @@ class _ContactsState extends State<Contacts> {
                 ),
                 buildTextField((value){
                   email=value;
-                } , 'Email', 'johndoe@gmail.com', TextInputType.emailAddress),
+                } , 'Email', 'johndoe@gmail.com', TextInputType.emailAddress, emailController),
                 const SizedBox(
                   height: 20,
                 ),
@@ -68,30 +70,21 @@ class _ContactsState extends State<Contacts> {
                 ),
                 buildTextField((value){
                   phoneNumber=value;
-                } , 'Phone number', '+254 xxx xxx xxx', TextInputType.number),
+                } , 'Phone number', '+254 xxx xxx xxx', TextInputType.number ,phoneNumberController),
                 const SizedBox(
                   height: 60,
                 ),
               Center(
                   child: ElavatedButton('Continue' , white, mainOrange,(){
-                    try{
+
                       if(email.isNotEmpty && phoneNumber.isNotEmpty){
-                        print(email);
-                        print(phoneNumber);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) =>  const Birthday()),
                         );
                       }
-
-
-                    }
-                    catch(e){
-                      // TODO:HANDLE INSTANCE WHERE USER TRIES TO PROCEED WITHOUT TYPING IN NAME---ACCESS OF NAME VARIABLE WHERE ITS DOESN'T EXIST
-                    }
-
-
-                  }),
+                  },3),
                 )
 
 

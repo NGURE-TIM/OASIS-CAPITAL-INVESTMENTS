@@ -4,8 +4,10 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fulusi/data_Entry/photo.dart';
 import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
 
-
+import 'income.dart';
+DateTime selectedDate = DateTime.now();
 class Birthday extends StatefulWidget {
 
   const Birthday({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class Birthday extends StatefulWidget {
 }
 
 class _BirthdayState extends State<Birthday> {
-  late String name ;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -43,37 +45,42 @@ class _BirthdayState extends State<Birthday> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextWidget('Please pick your date of birth.',
+                TextWidget('Just a few more details to go .Please pick your date of birth.',
                   FontWeight.w400,
                   grey,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                buildTextField((value){
-                  name=value;
-                } , '', 'John Doe', TextInputType.text),
+                Container(
+                  height: 100,
+
+                  decoration:  BoxDecoration(
+
+                    color: Colors.grey.shade700,
+                  ),
+                  child: buildScrollDatePicker(
+                          ( value) {
+                          selectedDate = value;
+
+                      }
+
+                  ),
+                ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Center(
                   child: ElavatedButton('Continue' , white, mainOrange,(){
-                    try{
-                      if(name.isNotEmpty){
+
+                      if(selectedDate != DateTime.now()){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  const Photo()),
+                          MaterialPageRoute(builder: (context) =>  const Income()),
                         );
                       }
 
-
-                    }
-                    catch(e){
-                      // TODO:HANDLE INSTANCE WHERE USER TRIES TO PROCEED WITHOUT TYPING IN NAME---ACCESS OF NAME VARIABLE WHERE ITS DOESN'T EXIST
-                    }
-
-
-                  }),
+                  },3),
                 )
 
 
@@ -82,6 +89,15 @@ class _BirthdayState extends State<Birthday> {
           ),
         )
     ));
+  }
+
+  ScrollDatePicker buildScrollDatePicker(Function(DateTime) onChanged ) {
+    return ScrollDatePicker(
+
+                  selectedDate: selectedDate,
+                  locale: const Locale('en'),
+                  onDateTimeChanged: onChanged,
+                );
   }
 
 }

@@ -62,14 +62,14 @@ class _AccountInfoState extends State<AccountInfo> {
                 ElavatedButton('Skip ' , white ,mainBlue , (){Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Verify()),
-                );}),
+                );},3),
                 const SizedBox(
                     width:15
                 ),
                 ElavatedButton('Continue' , white, mainOrange,(){Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Referral()),
-                );}),
+                );},3),
 
               ],
             ),

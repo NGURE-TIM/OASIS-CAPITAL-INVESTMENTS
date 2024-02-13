@@ -59,7 +59,6 @@ class _entryState extends State<Contact> {
    void pushToDb()async{
 try{
   await db.collection('userData').add({
-
     "Firstname":widget.Firstname,
     "Middlename":widget.Middlename,
     " Lastname":widget.Lastname,
@@ -85,9 +84,6 @@ try{
 catch(e){
   print(e);
 }
-
-
-
    }
 
   @override

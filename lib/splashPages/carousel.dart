@@ -100,14 +100,14 @@ class Carousel extends StatelessWidget {
                  ElavatedButton('Member ' , white ,mainBlue   , (){Navigator.push(
                    context,
                    MaterialPageRoute(builder: (context) => Verify()),
-                 );}),
+                 );},3),
                  const SizedBox(
                    width:15
                  ),
                  ElavatedButton('New user' , white, mainOrange,(){Navigator.push(
                    context,
                    MaterialPageRoute(builder: (context) => const AccountInfo()),
-                 );}),
+                 );},3),
 
                ],
              ),

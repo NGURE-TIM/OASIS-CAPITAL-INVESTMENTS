@@ -52,6 +52,9 @@ dependencies:
   provider: ^6.1.1
   image_picker: ^1.0.7
   gif_view: ^0.4.3
+  scroll_date_picker: ^3.7.3
+  dropdown_button2: ^2.3.9
+  cool_dropdown: ^2.1.0
 
 
 dev_dependencies:
