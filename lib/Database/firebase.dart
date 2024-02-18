@@ -38,6 +38,31 @@ checkReferral (String code ,BuildContext context )async{
   }
 }
 
+//this code checks for phoneNumber/email existance in the db and return true or false
+verifyPhoneNumber(String address ,BuildContext context )async{
+  try{
+    CollectionReference collection=FirebaseFirestore.instance.collection('userData');
+    QuerySnapshot snapshot=await collection.where('Phone number', isEqualTo: address).get();
+
+    if (snapshot.docs.isNotEmpty && context.mounted){
+
+      Provider.of<VerifyPage>(context , listen: false).dbCall();
+
+    }
+    else if(snapshot.docs.isEmpty &&context.mounted){
+
+      Provider.of<VerifyPage>(context , listen: false).inValid();
+      await Future.delayed(const Duration(seconds:3));
+      Provider.of<Code>(context , listen: false).turnWrongON();
+
+    }
+  }
+  catch(e){
+    //TODO :HANDLE ERRORS
+  }
+
+}
+
 FirebaseFirestore db =FirebaseFirestore.instance;
  pushToDb(BuildContext context)async{
   Provider.of<Code>(context , listen: false).reset();

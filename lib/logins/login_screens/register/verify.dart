@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:fulusi/data_Entry/entry.dart';
 
 import '../../../globalWidgets.dart';
+import '../../../stateManagement_provider/provider.dart';
 
-
- int phoneNumber = 0;
+int phoneNumber = 0;
  int? errorcode=2;
  bool textField= false;
  FirebaseAuth auth=FirebaseAuth.instance;
@@ -22,6 +23,7 @@ final TextEditingController _fieldFour = TextEditingController();
 final TextEditingController _fieldFive = TextEditingController();
 final TextEditingController _fieldSix = TextEditingController();
 TextEditingController phoneNumberController = TextEditingController(text: '+254');
+TextEditingController emailController = TextEditingController();
  String otp='';
  bool otpflag= false;
  void checkTextFieldStatus(){
@@ -107,11 +109,11 @@ class _VerifyState extends State<Verify> {
                   child: Column(
                     children: [
                       Container(
-                        height: 100,
+                        height: 50,
                       ),
                       SizedBox(
-                        height: 100,
-                        width: 100,
+                        height: 150,
+                        width: 150,
                         child: Image.asset("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
                       ),
                       const Center(
@@ -127,100 +129,82 @@ class _VerifyState extends State<Verify> {
                       const SizedBox(
                         height:10,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 60,right: 60),
-                        child: Text(
-                          'Please verify your phone number to proceed',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: white,
 
-                              fontWeight: FontWeight.w300,
-                              fontSize:18
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 60,right: 60),
+                        child:Consumer<VerifyPage>(
+                        builder:(context,dataProviderModel,child){
+                          return  Text(
+                            'Please verify your ${dataProviderModel.title} to continue',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: white,
+
+                                fontWeight: FontWeight.w500,
+                                fontSize:18
+                            ),
+                          );}
                         ),
                       ),
                       const SizedBox(
                         height:50,
                       ),
-                      Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: white,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElavatedButton('Mobile phone' , white, mainBlue,() {
 
-                            },3),
-                            ElavatedButton('Email' , mainOrange, white,() {
-
-                            },0),
-                          ],
-                        ),
-                        ),
-                      const SizedBox(
-                        height:30,
-                      ),
-                      Container(
-                        width: 300,
-                        child: TextField(
-                          onChanged: (value){
-                            phoneNumber=int.tryParse(value)??0 ;
-                            number=phoneNumber.toString();
-                            if(number.length==12){
-                              setState(() {
-                                textField=true;
-                                signInUser('+$number', context);
-                                bottom( context);
-                                errorcode=2;
-                              });
+                      Consumer<VerifyPage>(
+                          builder:(context,dataProviderModel,child) {
+                            return dataProviderModel.upDateTextField ? Container(
+                              width: 300,
+                              child: buildTextField(context, (value) {
+                                phoneNumber=int.tryParse(value!)??0 ;
+                                number=phoneNumber.toString();
+                                if (number.length == 12) {
+                                  setState(() {
+                                    textField = true;
+                                    signInUser('+$number', context);
+                                    bottom(context);
+                                    errorcode = 2;
+                                  });
+                                }
+                                else if (number.length != 12) {
+                                  textField = false;
+                                  setState(() {
+                                    errorcode = 0;
+                                  });
+                                }
+                              }, phoneNumberController, TextInputType.phone,
+                                  'Phone Number', 'xxx-xxx-xxx'),
+                            ) : Container(
+                            width: 300,
+                            child: buildTextField(context, (value) {
+                            if (number.length == 12) {
+                            setState(() {
+                            textField = true;
+                            signInUser('+$number', context);
+                            bottom(context);
+                            errorcode = 2;
+                            });
                             }
-                            else if(number.length!=12){
-                              textField=false;
-                              setState(() {
-                                errorcode=0;
-                              });
+                            else if (number.length != 12) {
+                            textField = false;
+                            setState(() {
+                            errorcode = 0;
+                            });
                             }
-                          },
-                          cursorColor: white,
-                          controller: phoneNumberController,
-                          keyboardType: TextInputType.phone,
-                          style:const TextStyle(
-                              fontSize:25,
-                              color: white
-                          ),
-                          decoration:const InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: white), // Set the color you want
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-
-                              borderSide: BorderSide(color: white), // Set the color you want
-                            ),
-
-                            labelText: 'Phone Number',
-                            labelStyle:TextStyle(
-                                fontWeight: FontWeight.w100,
-                                color: white
-                            ) ,
-                            filled: false,
-                          ) ,
-                        ),
-                      ),
+                            }, emailController, TextInputType.emailAddress,
+                            'Email', 'johnDoe@gmail.com'),
+                            );
+                          }),
                       const SizedBox(
                         height:5,
                       ),
                       errortext(errorcode),
+
                       const SizedBox(
                         height: 20,
                       ),
                       GestureDetector(
                         onTap: (){
                           if(textField==true){
-
                             signInUser('+$number', context);
                             bottom( context);
                           }
@@ -228,13 +212,17 @@ class _VerifyState extends State<Verify> {
 
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius:BorderRadius.circular(12) ,
-                            color: orange,
+                            border: Border.all(
+                              color: mainOrange,
+                              width: 1.0, // Adjust border thickness as needed
+                            ),
+                            borderRadius:BorderRadius.circular(30) ,
+                            color: transparent,
                           ) ,
 
                           height: 50,
                           width:250 ,
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Sign in',
                               style: TextStyle(
@@ -245,31 +233,59 @@ class _VerifyState extends State<Verify> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 220,
+                      const SizedBox(
+                        height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
 
-                        child:    RichText(
+                      const Row(
+                       
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 40,
+                            child: Divider(
+                              color: white,
+                              thickness: 1,
 
-                          text: TextSpan(
-                            text: 'By clicking continue, i ascertain i have read the ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Terms and Conditions ',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'and that the keyed in phone number is mine and the M-pesa account associated with it.',
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      )
+                          SizedBox(
+                            width:5,
+                          ),
+                          Text(
+                            'or verify via ',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: white,
+
+                                fontWeight: FontWeight.w300,
+                                fontSize:18
+                            ),
+                          ),
+                          SizedBox(
+                            width:5,
+                          ),
+                          SizedBox(
+                            width: 40,
+                            child: Divider(
+                              color: white,
+                              thickness: 1,
+
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Consumer<VerifyPage>(
+                          builder:(context,dataProviderModel,child){
+                       return ElavatedButton(dataProviderModel.buttonName , mainOrange, white,() {
+
+    Provider.of<VerifyPage>(context , listen: false).onClick();
+                        },3);
+  }),
+
                     ],
                   ),
                 ),
@@ -282,10 +298,43 @@ class _VerifyState extends State<Verify> {
       ),
     );
   }
+
+  TextField buildTextField(BuildContext context, Function(String?) onchanged ,TextEditingController controller,TextInputType type , String label,String? hint ) {
+    return TextField(
+                        onChanged: onchanged,
+                        cursorColor: white,
+
+                        controller: controller,
+                        keyboardType: type,
+                        style: const TextStyle(
+                            fontSize:25,
+                            color: white
+                        ),
+                        decoration:InputDecoration(
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: white), // Set the color you want
+                          ),
+                          enabledBorder: const UnderlineInputBorder(
+
+                            borderSide: BorderSide(color: white), // Set the color you want
+                          ),
+
+                          labelText: label,
+                          labelStyle:const TextStyle(
+                              fontWeight: FontWeight.w100,
+                              color: white
+                          ) ,
+                          hintText: hint,
+                          hintStyle: const TextStyle(
+                              fontWeight: FontWeight.w100,
+                              fontSize: 18,
+                              color: white
+                          ) ,
+                          filled: false,
+                        ) ,
+                      );
+  }
 }
-
-
-
 Widget errortext(int? errorC){
   bool textField=false;
   if(errorC==0){
@@ -294,7 +343,7 @@ textField=true;
   else{
     textField=false;
   }
-    return textField ? Text('Phone number should be 12 digits long inclusive of country code!',
+    return textField ? const Text('Phone number should be 12 digits long inclusive of country code!',
 
       style: TextStyle(
         color: error,
@@ -302,7 +351,7 @@ textField=true;
         fontSize: 10,
       ),
     )
-        : SizedBox();
+        : const SizedBox();
   }
 
 
@@ -323,31 +372,6 @@ signInUser(String phoneNumber , BuildContext  context) async{
       },
       codeSent:  (String verificationId, int? resendToken) async {
         streamDuration.pause();
-        /*
-        *  showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Stack(
-                children: [
-                  ModalBarrier(
-                    color: black.withOpacity(0.4),
-                  ),
-                  AlertDialog(
-                    backgroundColor: transparent,
-                    content: SimpleCircularProgressBar(
-                      size: 50,
-                      progressStrokeWidth: 5,
-                      backStrokeWidth: 8,
-                      mergeMode: true,
-                      progressColors: const [seedBlue],
-                      backColor: Colors.black.withOpacity(0.4),
-                      animationDuration: 3,
-                    ),
-                  ),
-                ]
-            );
-          },
-        );*/
 
         while(otpflag==false){
           await Future.delayed(Duration(seconds:5));
@@ -377,6 +401,11 @@ signInUser(String phoneNumber , BuildContext  context) async{
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
+        transitionAnimationController: AnimationController(
+          vsync: Navigator.of(ctx),
+          duration: const Duration(milliseconds: 900), // Adjust animation duration as needed
+          reverseDuration: const Duration(milliseconds: 900),
+        ),
         builder: (ctx) => Padding(
           padding:  EdgeInsets.only(
               bottom: MediaQuery.of(ctx).viewInsets.bottom
@@ -390,8 +419,8 @@ signInUser(String phoneNumber , BuildContext  context) async{
             ),
             child:Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
                   child: Text("Enter verification code",
                     style: TextStyle(
                       color: black,
@@ -404,7 +433,7 @@ signInUser(String phoneNumber , BuildContext  context) async{
                 Padding(
                   padding: const EdgeInsets.only(left: 30,right: 30,),
                   child: DefaultTextStyle(
-                    style:  TextStyle(
+                    style:  const TextStyle(
                     color: black,
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
@@ -415,7 +444,7 @@ signInUser(String phoneNumber , BuildContext  context) async{
                         RichText(
                           text: TextSpan(
                             text: 'A login code has been sent to ',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color:black,
                               fontWeight: FontWeight.w700,
                               fontSize: 20,
@@ -423,7 +452,7 @@ signInUser(String phoneNumber , BuildContext  context) async{
                             children: <TextSpan>[
                               TextSpan(
                                 text: '+$phoneNumber',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: seedBlue,
                                   decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.w700,
@@ -546,3 +575,48 @@ OtpInput(this.controller , this.input);
     );
   }
 }
+
+
+/* Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: transparent,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElavatedButton('Mobile phone' , white, mainBlue,() {
+
+                            },3),
+                            ElavatedButton('Email' , mainOrange, white,() {
+
+                            },0),
+                          ],
+                        ),
+                        ),*/
+
+
+/*Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
+
+                        child:    RichText(
+
+                          text: TextSpan(
+                            text: 'By clicking continue, i ascertain i have read the ',
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Terms and Conditions ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'and that the keyed in phone number is mine and the M-pesa account associated with it.',
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      )*/

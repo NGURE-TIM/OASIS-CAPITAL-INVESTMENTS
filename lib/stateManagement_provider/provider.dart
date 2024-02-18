@@ -1,10 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class Code extends ChangeNotifier{
   bool successfulCode =false;
   bool wrongCode=false;
   dbCall (){
-    print('5');
      successfulCode=true;
      notifyListeners();
    }
@@ -18,16 +19,50 @@ class Code extends ChangeNotifier{
     notifyListeners();
   }
   void reset(){
-    print('2');
-
      wrongCode=false;
      successfulCode=false;
-    print(wrongCode);
-    print(successfulCode);
+     notifyListeners();
   }
 
 }
 
+
+
+class VerifyPage extends ChangeNotifier{
+  String title ='phone number';
+  String buttonName='Email';
+  bool upDateTextField=true;
+  onClick(){
+
+    if(buttonName == 'Email'){
+      buttonName='Phone number';
+    }
+    else{
+      buttonName='Email';
+    }
+
+    if(title == 'phone number'){
+      title='email';
+    }
+    else{
+      title='phone number';
+    }
+
+    upDateTextField=upDateTextField ? false : true;
+
+    notifyListeners();
+  }
+
+  bool exists=false;
+  dbCall(){
+    exists=true;
+    notifyListeners();
+  }
+  inValid(){
+    exists=false;
+    notifyListeners();
+  }
+}
 
 
 

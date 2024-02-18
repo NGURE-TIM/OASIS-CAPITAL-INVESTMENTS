@@ -118,7 +118,7 @@ Container buildTextField(  Function(String)onChanged , String label,String hint 
     child: TextField(
       onChanged: onChanged,
 controller: controller,
-      cursorColor: white,
+      cursorColor: black,
       keyboardType: type,
       style:const TextStyle(
           fontSize:20,

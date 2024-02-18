@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:fulusi/data_Entry/account_Info.dart';
 import 'package:fulusi/data_Entry/entry.dart';
-import 'package:fulusi/logins/login_screens/register/register.dart';
+
 
 import '../globalWidgets.dart';
+import '../logins/login_screens/register/verify.dart';
 
 //bool phoneNumber verified
 

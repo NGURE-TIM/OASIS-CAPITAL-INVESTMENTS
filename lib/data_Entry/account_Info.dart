@@ -3,7 +3,8 @@ import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 import '../globalWidgets.dart';
-import '../logins/login_screens/register/register.dart';
+
+import '../logins/login_screens/register/verify.dart';
 import 'code.dart';
 
 class AccountInfo extends StatefulWidget {

@@ -5,8 +5,9 @@ import '../globalWidgets.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import '../Database/firebase.dart';
-import 'package:fulusi/logins/login_screens/register/register.dart';
 
+
+import '../logins/login_screens/register/verify.dart';
 import '../stateManagement_provider/provider.dart';
 String? educationLevel;
 String? wageLevel;

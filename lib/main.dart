@@ -4,6 +4,7 @@ import 'package:fulusi/splashPages/splash.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
+
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();
 try {
@@ -21,7 +22,7 @@ Widget build(BuildContext context) {
 return MultiProvider(
   providers:[
     ChangeNotifierProvider(create: (context)=>Code()),
-    //ChangeNotifierProvider(create: (context)=>pushToDb()),
+    ChangeNotifierProvider(create: (context)=>VerifyPage()),
   ],
   child:   MaterialApp(
   debugShowCheckedModeBanner: false,
