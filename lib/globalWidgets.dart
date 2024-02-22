@@ -77,7 +77,6 @@ Widget buildDivider(double? width) {
 
 
 Future<dynamic> buildShowProgress(BuildContext context ) {
-  print('3');
 
   return showDialog(
     context: context,
@@ -86,11 +85,8 @@ Future<dynamic> buildShowProgress(BuildContext context ) {
       return Consumer<Code>(
           builder:(context,dataProviderModel,child){
             if( dataProviderModel.successfulCode || dataProviderModel.wrongCode ) {
-              print('7');
-              print(dataProviderModel.successfulCode);
               Navigator.of(context).pop();
             }
-            print('4');
             return Stack(
                 children: [
                   ModalBarrier(

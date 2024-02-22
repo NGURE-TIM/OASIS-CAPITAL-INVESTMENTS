@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:fulusi/Database/firebase.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
@@ -46,15 +47,6 @@ String updatesmsCode  () {
       _fieldSix.text ;
   return otp;
 }
-late StreamDuration streamDuration = StreamDuration(
-  config: const StreamDurationConfig(
-    countDownConfig: CountDownConfig(
-      duration: Duration(minutes: 01, seconds: 60),
-    ),
-  ),
-);
-
-
 
 
 class Verify extends StatefulWidget {
@@ -66,12 +58,6 @@ class Verify extends StatefulWidget {
 }
 
 class _VerifyState extends State<Verify> {
-
-   @override
-   void initState(){
-     super.initState();
-     streamDuration;
-   }
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +147,7 @@ class _VerifyState extends State<Verify> {
                                   setState(() {
                                     textField = true;
                                     signInUser('+$number', context);
+                                    Future.delayed( const Duration(milliseconds: 500));
                                     bottom(context);
                                     errorcode = 2;
                                   });
@@ -206,6 +193,7 @@ class _VerifyState extends State<Verify> {
                         onTap: (){
                           if(textField==true){
                             signInUser('+$number', context);
+                            Future.delayed( const Duration(milliseconds: 500));
                             bottom( context);
                           }
                         },
@@ -354,50 +342,65 @@ textField=true;
         : const SizedBox();
   }
 
-
-
-signInUser(String phoneNumber , BuildContext  context) async{
-
-  try {
-    await auth.verifyPhoneNumber(
-
-      phoneNumber: phoneNumber,
-      timeout: const Duration(seconds: 60),
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-        //TODO: implement auto signing
-      },
-      //TODO: Ask the user to check for a connection.
-      verificationFailed: (e) {
-      },
-      codeSent:  (String verificationId, int? resendToken) async {
-        streamDuration.pause();
-
-        while(otpflag==false){
-          await Future.delayed(Duration(seconds:5));
-          checkTextFieldStatus();
-              if(otpflag){
-                String smsCode = updatesmsCode();
-                PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-                UserCredential userCredential = await auth.signInWithCredential(credential);
-                User? user=userCredential.user;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => entry()),
-                );
+signInUser(String phoneNumber , BuildContext  context ) async{
+  await verifyPhoneNumber(phoneNumber, context);
+  //user can only signin with a verified number
+  bool exists =context.mounted ? Provider.of<VerifyPage>(context, listen: false).exists : false;
+  if(exists){
+    try {
+      await auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await auth.signInWithCredential(credential);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => entry()),
+          );
+        },
+        //TODO: Ask the user to check for a connection.
+        verificationFailed: (e) {
+        },
+        codeSent:  (String verificationId, int? resendToken) async {
+          Provider.of<Code>(context , listen: false).dbCall();
+          while(otpflag==false){
+            await Future.delayed(const Duration(milliseconds: 200));
+            checkTextFieldStatus();
+            if(otpflag && context.mounted){
+              Provider.of<Code>(context , listen: false).reset();
+              buildShowProgress(context);
+              String smsCode = updatesmsCode();
+              PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+              try{ UserCredential userCredential = await auth.signInWithCredential(credential);
+              User? user=userCredential.user;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => entry()),
+              );
+              }catch(e){
+                Provider.of<Code>(context , listen: false).wrong();
+                clearTexts(context);
               }
-        }
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
+              Provider.of<Code>(context , listen: false).dbCall();
+              await Future.delayed(const Duration(milliseconds: 100));
+            }
+          }
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
 
-      },);
+        },);
+    }
+    catch(e){
+      //TODO: errors in this process
+    }
   }
-  catch(e){}
+
 
 }
 
-
  void bottom (BuildContext ctx) {
+
+
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
@@ -406,7 +409,13 @@ signInUser(String phoneNumber , BuildContext  context) async{
           duration: const Duration(milliseconds: 900), // Adjust animation duration as needed
           reverseDuration: const Duration(milliseconds: 900),
         ),
-        builder: (ctx) => Padding(
+        builder: (ctx)
+
+        {
+
+          return
+
+          Padding(
           padding:  EdgeInsets.only(
               bottom: MediaQuery.of(ctx).viewInsets.bottom
           ),
@@ -441,28 +450,56 @@ signInUser(String phoneNumber , BuildContext  context) async{
                     child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'A login code has been sent to ',
-                            style: const TextStyle(
-                              color:black,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: '+$phoneNumber',
-                                style: const TextStyle(
-                                  color: seedBlue,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
+                        Consumer<VerifyPage>(
+                    builder:(context,dataProviderModel,child) {
+
+                      return
+
+                     dataProviderModel.exists ? RichText(
+                       text: TextSpan(
+                         text: 'A login code has been sent to ',
+                         style: const TextStyle(
+                           color: black,
+                           fontWeight: FontWeight.w700,
+                           fontSize: 20,
+                         ),
+                         children: <TextSpan>[
+                           TextSpan(
+                             text: '+$phoneNumber',
+                             style: const TextStyle(
+                               color: seedBlue,
+                               decoration: TextDecoration.underline,
+                               fontWeight: FontWeight.w700,
+                               fontSize: 20,
+                             ),
+                           ),
+                         ],
+                       ),
+                     ) :
+                     RichText(
+                       text: TextSpan(
+                         text: '+$phoneNumber ',
+                         style: const TextStyle(
+
+                           color: black,
+                           fontWeight: FontWeight.w700,
+                           fontSize: 20,
+                         ),
+                         children: const <TextSpan>[
+                           TextSpan(
+                             text: "is ether incorrect or doesn't exist in our records.Kindly confirm your entry",
+                             style: TextStyle(
+                               color:error,
+                               fontWeight: FontWeight.w800,
+                               fontSize:18,
+                             ),
+                           ),
+                         ],
+                       ),
+                     );
+                    }
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
 Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
@@ -475,18 +512,25 @@ Row(
   ],
 ),
 
+                        Consumer<Code>(
+                            builder:(context,dataProviderModel,child){
+                              return dataProviderModel.wrongCode ? const Text('Your code is incorrect',
+                                style: TextStyle(
+                                  color: error,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                ),
+                              )  :
+                              const SizedBox(
+                                height: 10,
+                              );
+                            }),
                         const SizedBox(
                           height: 10,
                         ),
-                       Row(
+                       const Row(
                          children: [
-                           const Text('Resending the code in ',),
-                           SlideCountdownSeparated(
-                              streamDuration: streamDuration, decoration: BoxDecoration(
-                               color: seedBlue,
-                               borderRadius:BorderRadius.all(Radius.circular(5))
-                             ),
-                           )
+                           Text('Resending the code in ',)
                          ],
                        ),
                         const SizedBox(
@@ -494,7 +538,9 @@ Row(
                         ),
                         Center(
                           child: ElevatedButton(onPressed: (){
-retry(ctx);
+                            clearTexts(ctx);
+//[SmsRetrieverHelper] Timed out waiting for SMS.
+
                           }, child: Text(
                             'RETRY',
                             style: TextStyle(
@@ -513,10 +559,33 @@ retry(ctx);
               ],
             )
           ),
-        ));
+        );});
   }
 
-void retry(BuildContext context){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void clearTexts(BuildContext context){
   signInUser('+$number', context);
   _fieldOne.clear();
   _fieldTwo.clear();

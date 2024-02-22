@@ -10,7 +10,6 @@ class Code extends ChangeNotifier{
      notifyListeners();
    }
    void wrong(){
-
      wrongCode=true;
      notifyListeners();
    }
@@ -29,6 +28,7 @@ class Code extends ChangeNotifier{
 
 
 class VerifyPage extends ChangeNotifier{
+
   String title ='phone number';
   String buttonName='Email';
   bool upDateTextField=true;
@@ -53,12 +53,13 @@ class VerifyPage extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool exists=false;
+  bool exists=true;
   dbCall(){
     exists=true;
     notifyListeners();
   }
-  inValid(){
+  reset(){
+    //reseting value back to false
     exists=false;
     notifyListeners();
   }

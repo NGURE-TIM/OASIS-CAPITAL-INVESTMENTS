@@ -186,13 +186,12 @@ class _IncomeState extends State<Income> {
 }
 
  push(BuildContext context)async {
-print('1');
   await pushToDb(context);
-print('8');
+
 }
 
 navigate(BuildContext context){
-  print('nav');
+
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) =>  const Verify()),
