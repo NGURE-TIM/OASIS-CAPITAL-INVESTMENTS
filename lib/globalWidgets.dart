@@ -85,8 +85,12 @@ Future<dynamic> buildShowProgress(BuildContext context ) {
       return Consumer<Code>(
           builder:(context,dataProviderModel,child){
             if( dataProviderModel.successfulCode || dataProviderModel.wrongCode ) {
+              print( '3 ${Provider.of<Code>(context , listen: false).wrongCode}');
+              print( '4 ${Provider.of<Code>(context , listen: false).successfulCode}');
               Navigator.of(context).pop();
             }
+            print( '5 ${Provider.of<Code>(context , listen: false).wrongCode}');
+            print( '6 ${Provider.of<Code>(context , listen: false).successfulCode}');
             return Stack(
                 children: [
                   ModalBarrier(

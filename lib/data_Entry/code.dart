@@ -175,8 +175,7 @@ void checkTextFieldStatus(BuildContext context)async{
    if (textFieldStatus && context.mounted) {
 
     String code=textFieldStatusComplete();
-
-    buildShowProgress(context);
+ buildShowProgress(context);
     checkReferral(code , context);
    }}}
 

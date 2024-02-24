@@ -28,12 +28,15 @@ TextEditingController emailController = TextEditingController();
  String otp='';
  bool otpflag= false;
  void checkTextFieldStatus(){
+
+
    bool all =_fieldOne.text.isNotEmpty &&
        _fieldTwo.text.isNotEmpty &&
        _fieldThree.text.isNotEmpty &&
        _fieldFour.text.isNotEmpty &&
        _fieldFive.text.isNotEmpty &&
        _fieldSix.text.isNotEmpty;
+
    if(all){
      otpflag=true;
    }
@@ -47,7 +50,13 @@ String updatesmsCode  () {
       _fieldSix.text ;
   return otp;
 }
-
+late StreamDuration streamDuration = StreamDuration(
+  config: const StreamDurationConfig(
+    countDownConfig: CountDownConfig(
+      duration: Duration(minutes: 00, seconds: 60),
+    ),
+  ),
+);
 
 class Verify extends StatefulWidget {
   const Verify({Key? key}) : super(key: key);
@@ -147,12 +156,13 @@ class _VerifyState extends State<Verify> {
                                   setState(() {
                                     textField = true;
                                     signInUser('+$number', context);
-                                    Future.delayed( const Duration(milliseconds: 500));
+                                    Future.delayed( const Duration(milliseconds: 100));
                                     bottom(context);
                                     errorcode = 2;
                                   });
                                 }
-                                else if (number.length != 12) {
+                                else if (number.length < 12 || number.length >12) {
+                                  //:todo fix the over 12 digits i suggest using contoller
                                   textField = false;
                                   setState(() {
                                     errorcode = 0;
@@ -289,6 +299,7 @@ class _VerifyState extends State<Verify> {
 
   TextField buildTextField(BuildContext context, Function(String?) onchanged ,TextEditingController controller,TextInputType type , String label,String? hint ) {
     return TextField(
+
                         onChanged: onchanged,
                         cursorColor: white,
 
@@ -343,11 +354,14 @@ textField=true;
   }
 
 signInUser(String phoneNumber , BuildContext  context ) async{
+
   await verifyPhoneNumber(phoneNumber, context);
   //user can only signin with a verified number
   bool exists =context.mounted ? Provider.of<VerifyPage>(context, listen: false).exists : false;
   if(exists){
+
     try {
+      streamDuration.play();
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
@@ -362,27 +376,34 @@ signInUser(String phoneNumber , BuildContext  context ) async{
         verificationFailed: (e) {
         },
         codeSent:  (String verificationId, int? resendToken) async {
-          Provider.of<Code>(context , listen: false).dbCall();
           while(otpflag==false){
+
             await Future.delayed(const Duration(milliseconds: 200));
             checkTextFieldStatus();
+
             if(otpflag && context.mounted){
+
+              streamDuration.pause();
               Provider.of<Code>(context , listen: false).reset();
               buildShowProgress(context);
               String smsCode = updatesmsCode();
               PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
               try{ UserCredential userCredential = await auth.signInWithCredential(credential);
               User? user=userCredential.user;
+              Provider.of<Code>(context , listen: false).dbCall();
+              await Future.delayed(const Duration(milliseconds: 100));
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => entry()),
+
               );
+
               }catch(e){
                 Provider.of<Code>(context , listen: false).wrong();
+                otpflag=false;
                 clearTexts(context);
               }
-              Provider.of<Code>(context , listen: false).dbCall();
-              await Future.delayed(const Duration(milliseconds: 100));
+
             }
           }
         },
@@ -528,9 +549,15 @@ Row(
                         const SizedBox(
                           height: 10,
                         ),
-                       const Row(
+                        Row(
                          children: [
-                           Text('Resending the code in ',)
+                           Text('Resending the code in '),
+                           SlideCountdownSeparated(
+                             streamDuration: streamDuration, decoration: BoxDecoration(
+                               color: seedBlue,
+                               borderRadius:BorderRadius.all(Radius.circular(5))
+                           ),
+                           ),
                          ],
                        ),
                         const SizedBox(
@@ -539,7 +566,7 @@ Row(
                         Center(
                           child: ElevatedButton(onPressed: (){
                             clearTexts(ctx);
-//[SmsRetrieverHelper] Timed out waiting for SMS.
+
 
                           }, child: Text(
                             'RETRY',
@@ -586,7 +613,6 @@ Row(
 
 
 void clearTexts(BuildContext context){
-  signInUser('+$number', context);
   _fieldOne.clear();
   _fieldTwo.clear();
   _fieldThree.clear();
