@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/Database/firebase.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-import 'package:slide_countdown/slide_countdown.dart';
 import 'package:fulusi/data_Entry/entry.dart';
-
 import '../../../globalWidgets.dart';
 import '../../../stateManagement_provider/provider.dart';
-
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 int phoneNumber = 0;
  int? errorcode=2;
  bool textField= false;
  FirebaseAuth auth=FirebaseAuth.instance;
  late String number;
+
+
+
 final TextEditingController _fieldOne = TextEditingController();
 final TextEditingController _fieldTwo = TextEditingController();
 final TextEditingController _fieldThree = TextEditingController();
@@ -27,6 +26,7 @@ TextEditingController phoneNumberController = TextEditingController(text: '+254'
 TextEditingController emailController = TextEditingController();
  String otp='';
  bool otpflag= false;
+
  void checkTextFieldStatus(){
 
 
@@ -50,14 +50,8 @@ String updatesmsCode  () {
       _fieldSix.text ;
   return otp;
 }
-late StreamDuration streamDuration = StreamDuration(
-  config: const StreamDurationConfig(
-    countDownConfig: CountDownConfig(
-      duration: Duration(minutes: 00, seconds: 60),
-    ),
-  ),
-);
 
+String result = '00:00';
 class Verify extends StatefulWidget {
   const Verify({Key? key}) : super(key: key);
 
@@ -66,8 +60,8 @@ class Verify extends StatefulWidget {
 
 }
 
-class _VerifyState extends State<Verify> {
 
+class _VerifyState extends State<Verify> {
   @override
   Widget build(BuildContext context) {
     final Size screensize=MediaQuery.of(context).size;
@@ -283,6 +277,57 @@ class _VerifyState extends State<Verify> {
     Provider.of<VerifyPage>(context , listen: false).onClick();
                         },3);
   }),
+                      const SizedBox(
+                        height: 90,
+                      ),
+                    RichText(
+                      text: const TextSpan(
+                        text: 'To uphold account security and align with our '
+                        ,
+                        style: TextStyle(
+
+                          color: white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Terms & Conditions",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color:error,
+                              fontWeight: FontWeight.w800,
+                              fontSize:13,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " and ",
+                            style: TextStyle(
+                              color:white,
+                              fontWeight: FontWeight.w800,
+                              fontSize:13,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Data Privacy Policy",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color:error,
+                              fontWeight: FontWeight.w800,
+                              fontSize:13,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " we employ a one-time passcode (OTP) verification to your registered number/email.",
+                            style: TextStyle(
+                              color:white,
+                              fontWeight: FontWeight.w800,
+                              fontSize:13,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
 
                     ],
                   ),
@@ -354,14 +399,13 @@ textField=true;
   }
 
 signInUser(String phoneNumber , BuildContext  context ) async{
-
+  print('cleany');
   await verifyPhoneNumber(phoneNumber, context);
-  //user can only signin with a verified number
-  bool exists =context.mounted ? Provider.of<VerifyPage>(context, listen: false).exists : false;
-  if(exists){
+  //user can only signin with a verified number]
 
+  if(context.mounted && Provider.of<VerifyPage>(context, listen: false).exists==true){
     try {
-      streamDuration.play();
+      Provider.of<TimerDuration>(context, listen: false).start();
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
@@ -383,7 +427,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
 
             if(otpflag && context.mounted){
 
-              streamDuration.pause();
+              Provider.of<TimerDuration>(context, listen: false).stop();
               Provider.of<Code>(context , listen: false).reset();
               buildShowProgress(context);
               String smsCode = updatesmsCode();
@@ -419,9 +463,13 @@ signInUser(String phoneNumber , BuildContext  context ) async{
 
 }
 
+
+retry(){
+
+}
+
+
  void bottom (BuildContext ctx) {
-
-
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
@@ -431,9 +479,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
           reverseDuration: const Duration(milliseconds: 900),
         ),
         builder: (ctx)
-
         {
-
           return
 
           Padding(
@@ -549,36 +595,78 @@ Row(
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
-                         children: [
-                           Text('Resending the code in '),
-                           SlideCountdownSeparated(
-                             streamDuration: streamDuration, decoration: BoxDecoration(
-                               color: seedBlue,
-                               borderRadius:BorderRadius.all(Radius.circular(5))
-                           ),
-                           ),
-                         ],
-                       ),
+        Consumer<TimerDuration>(
+        builder:(context,dataProviderModel,child) {
+          return Row(
+            children: [
+              const Text('You can request a new code in'),
+              const SizedBox(
+                width: 5,
+              ),
+              StreamBuilder<int>(
+                stream: dataProviderModel.stopWatchTimer.rawTime,
+                initialData: 0,
+                builder: (context, snapshot) {
+                  final value = snapshot.data;
+                  final displayTime = StopWatchTimer.getDisplayTime(
+                    value!,
+                    hours: false,
+                    minute: false,
+                    second: true,
+                    milliSecond: true,
+                    secondRightBreak: ':',
+                  );
+                  return Container(
+                    width: 50,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: dataProviderModel.done ? transparent :grey,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          displayTime,
+                          style: const TextStyle(fontSize:20,
+                            color: white
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        } ),
                         const SizedBox(
                           height: 15,
                         ),
-                        Center(
-                          child: ElevatedButton(onPressed: (){
-                            clearTexts(ctx);
-
-
-                          }, child: Text(
-                            'RETRY',
-                            style: TextStyle(
-                              color: white
-                            ),
-                          ),
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0, backgroundColor: orange
-                            ),
-                          ),
-                        )
+        Consumer<TimerDuration>(
+        builder:(context,dataProviderModel,child) {
+        return Center(
+                              child: ElevatedButton(onPressed: (){
+        if(dataProviderModel.done) {
+        Provider.of<TimerDuration>(context , listen: false).reset();
+        Future.delayed(const Duration(milliseconds: 100));
+        Provider.of<TimerDuration>(context , listen: false).start();
+        signInUser('+$number', context);
+        Provider.of<TimerDuration>(context , listen: false).resetState();
+        }
+                              },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0, backgroundColor: dataProviderModel.done? mainOrange :mainBlue
+                                ), child: const Text(
+                                  'RETRY',
+                                  style: TextStyle(
+                                      color: white
+                                  ),
+                                ),
+                              ),
+                            );}
+        )
                       ],
                     ),
                   ),

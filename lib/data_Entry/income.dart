@@ -9,6 +9,7 @@ import '../Database/firebase.dart';
 
 import '../logins/login_screens/register/verify.dart';
 import '../stateManagement_provider/provider.dart';
+
 String? educationLevel;
 String? wageLevel;
 class Income extends StatefulWidget {
