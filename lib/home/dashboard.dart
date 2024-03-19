@@ -191,12 +191,127 @@ class _DashState extends State<Dash> {
                                 'See more',
                                 style: TextStyle(
                                     color:mainOrange,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w800,
                                     fontSize:15
                                 ),),
                             ),
                           ],
-                        )
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                   SizedBox(
+                    width: 320,
+                    height: 250,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount:popular.length,
+                        itemBuilder: (context, index){
+                          return   Container(
+
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color:  Color.fromRGBO(250, 235, 215, 0.9)
+                              ),
+                              child:Padding(
+                                padding: const EdgeInsets.only(left: 10 ,right: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+
+                                      children: [
+                                        Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration:   BoxDecoration(
+                                              borderRadius: BorderRadius.circular(15),
+
+                                              color:white
+                                          ),
+                                          child:Center(
+                                            child: Icon(popular[index].typeOfLoan,
+                                              size: 35,
+                                              color: mainBlue,
+                                            ),
+                                          ) ,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Text(
+                                          'Education Loan',
+                                          style: TextStyle(
+                                              color: mainBlue,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:20
+                                          ),),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        ElevatedButton(onPressed: (){
+                                        //todo:application
+                                        },
+                                          style:  ElevatedButton.styleFrom(
+                                              fixedSize: Size(40, 20),
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                              elevation: 3, backgroundColor: white
+                                          ), child: const Text(
+                                            'Apply',
+                                            style: TextStyle(
+
+                                                color:  mainOrange
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Divider(
+                                      color: black,
+                                      height: 1,
+                                      thickness: 1,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+
+                                      children: [
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildColumn('Max amount', 'Kshs 2 million'),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildColumn('Interest','1% pm'),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildColumn('Duration','3 years'),
+                                      ],
+                                    ),const SizedBox(
+                                      height: 10,
+                                    ),
+
+
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+
+                    ),
+                  ),
+
+
+
 
 
 
@@ -211,6 +326,34 @@ class _DashState extends State<Dash> {
     );
   }
 
+
+
+  Column buildColumn(String title, String value) {
+    return Column(
+                                     mainAxisAlignment: MainAxisAlignment.start,
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       Text(
+                                        title,
+                                        style: TextStyle(
+                                            color: mainOrange,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize:20
+                                        ),),
+                                       const SizedBox(
+                                         height: 5,
+                                       ),
+                                       Text(
+                                         value,
+                                         style: TextStyle(
+                                             color: black,
+                                             fontWeight: FontWeight.w400,
+                                             fontSize:15
+                                         ),),
+                                     ],
+                                   );
+  }
+
   Column homepageicons(IconData icons , String action) {
     return Column(
                         children: [
@@ -220,7 +363,7 @@ class _DashState extends State<Dash> {
                             decoration:   BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
 
-                                color: Color.fromRGBO(250, 235, 215, 0.7)
+                                color: Color.fromRGBO(250, 235, 215, 0.9)
                             ),
                             child:Center(
                               child: IconButton(
@@ -354,3 +497,21 @@ List sliders=[
   ),
 
 ];
+
+class Item{IconData icondata;
+String typeOfLoan;
+String max;
+String interest;
+String duration;
+Item(this.icondata,this.typeOfLoan,this.max,this.interest,this.duration);}
+
+
+
+List popular=[
+  Item(Icons.history_edu_sharp, 'Education Loan', 'Kshs 2 million', '1% pm', '3 years'),
+  Item(Icons.house, 'Mortgage', 'Kshs 5 million', '1% pm', '10 years'),
+  Item(Icons.business_center_sharp, 'Business Loan', 'Kshs 10 million', '2% pm', '10 years'),
+  Item(Icons.car_rental, 'Car Loan', 'Kshs 2 million', '1% pm', '5 years')
+];
+
+
