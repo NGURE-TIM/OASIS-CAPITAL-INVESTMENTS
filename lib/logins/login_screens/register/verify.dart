@@ -4,7 +4,7 @@ import 'package:fulusi/Database/firebase.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:fulusi/data_Entry/entry.dart';
+import 'package:fulusi/home/dashboard.dart';
 import '../../../globalWidgets.dart';
 import '../../../stateManagement_provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -197,7 +197,7 @@ class _VerifyState extends State<Verify> {
                         onTap: (){
                           if(textField==true){
                             signInUser('+$number', context);
-                            Future.delayed( const Duration(milliseconds: 500));
+                            Future.delayed( const Duration(seconds:1));
                             bottom( context);
                           }
                         },
@@ -228,7 +228,6 @@ class _VerifyState extends State<Verify> {
                       const SizedBox(
                         height: 20,
                       ),
-
                       const Row(
                        
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +248,6 @@ class _VerifyState extends State<Verify> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: white,
-
                                 fontWeight: FontWeight.w300,
                                 fontSize:18
                             ),
@@ -399,7 +397,7 @@ textField=true;
   }
 
 signInUser(String phoneNumber , BuildContext  context ) async{
-  print('cleany');
+
   await verifyPhoneNumber(phoneNumber, context);
   //user can only signin with a verified number]
 
@@ -413,7 +411,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
           await auth.signInWithCredential(credential);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => entry()),
+            MaterialPageRoute(builder: (context) => Dash()),
           );
         },
         //TODO: Ask the user to check for a connection.
@@ -438,7 +436,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
               await Future.delayed(const Duration(milliseconds: 100));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => entry()),
+                MaterialPageRoute(builder: (context) => Dash()),
 
               );
 
@@ -613,7 +611,7 @@ Row(
                     hours: false,
                     minute: false,
                     second: true,
-                    milliSecond: true,
+                    milliSecond: false,
                     secondRightBreak: ':',
                   );
                   return Container(
@@ -760,46 +758,3 @@ OtpInput(this.controller , this.input);
 }
 
 
-/* Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: transparent,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElavatedButton('Mobile phone' , white, mainBlue,() {
-
-                            },3),
-                            ElavatedButton('Email' , mainOrange, white,() {
-
-                            },0),
-                          ],
-                        ),
-                        ),*/
-
-
-/*Padding(
-                        padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
-
-                        child:    RichText(
-
-                          text: TextSpan(
-                            text: 'By clicking continue, i ascertain i have read the ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Terms and Conditions ',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'and that the keyed in phone number is mine and the M-pesa account associated with it.',
-                              ),
-                            ],
-                          ),
-                        ),
-
-                      )*/

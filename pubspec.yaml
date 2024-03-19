@@ -57,6 +57,7 @@ dependencies:
   cool_dropdown: ^2.1.0
   flutter_countdown_timer: ^4.1.0
   stop_watch_timer: ^3.1.0+4
+  animated_icon: ^0.0.5
 
 
 dev_dependencies:
@@ -102,6 +103,12 @@ flutter:
     - assets/images/account_Info/Account info/undraw_my_personal_files_re_3q0p.svg
     - assets/images/account_Info/Email and password/Email capture-pana.svg
     - assets/images/account_Info/DOB/Calendar-rafiki.svg
+    - assets/images/home/Pink Blue Shapes Electric Music Concert Program.png
+    - assets/images/home/Purple Geometric Border.jpg
+    - assets/images/home/SL-120722-54400-25.jpg
+    - assets/images/home/8070b004-28e4-46fa-8246-08fceeec4e79.jpg
+    - assets/images/home/5623406.jpg
+    - assets/images/home/container.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

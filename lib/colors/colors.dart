@@ -5,6 +5,7 @@ const Color mainBlue = Color(0xFF34445C);
 const Color mainOrange=Color(0xFFFF9900);
 const Color black=Colors.black;
 const Color grey=Colors.grey;
+const Color brown = Color(0xFFF6D3A3);
 const Color Blue=  Color(0xFF151c4a);
 const Color cream = Color(0xFFffd880);
 const Color accent= Color(0xFFffb000);

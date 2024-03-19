@@ -1,8 +1,10 @@
+
+
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:fulusi/data_Entry/account_Info.dart';
-import 'package:fulusi/data_Entry/entry.dart';
+import 'package:fulusi/home/dashboard.dart';
 
 
 import '../globalWidgets.dart';
@@ -107,7 +109,8 @@ class Carousel extends StatelessWidget {
                  ),
                  ElavatedButton('New user' , white, mainOrange,(){Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => const AccountInfo()),
+                   //MaterialPageRoute(builder: (context) => const AccountInfo()),
+                   MaterialPageRoute(builder: (context) =>  Dash()),
                  );},3),
 
                ],
