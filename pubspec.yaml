@@ -52,12 +52,15 @@ dependencies:
   provider: ^6.1.1
   image_picker: ^1.0.7
   gif_view: ^0.4.3
-  scroll_date_picker: ^3.7.3
   dropdown_button2: ^2.3.9
   cool_dropdown: ^2.1.0
   flutter_countdown_timer: ^4.1.0
   stop_watch_timer: ^3.1.0+4
   animated_icon: ^0.0.5
+  stylish_bottom_bar: ^1.0.3
+  google_fonts: ^6.2.1
+  flutter_xlider: ^3.5.0
+  dropdown_search: ^5.0.6
 
 
 dev_dependencies:
@@ -69,7 +72,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -102,13 +105,17 @@ flutter:
     - assets/images/account_Info/Account info/Forms-cuate.svg
     - assets/images/account_Info/Account info/undraw_my_personal_files_re_3q0p.svg
     - assets/images/account_Info/Email and password/Email capture-pana.svg
+    - assets/images/container.jpg
     - assets/images/account_Info/DOB/Calendar-rafiki.svg
-    - assets/images/home/Pink Blue Shapes Electric Music Concert Program.png
-    - assets/images/home/Purple Geometric Border.jpg
-    - assets/images/home/SL-120722-54400-25.jpg
-    - assets/images/home/8070b004-28e4-46fa-8246-08fceeec4e79.jpg
-    - assets/images/home/5623406.jpg
-    - assets/images/home/container.jpg
+    - assets/images/home/payment-method.png
+    - assets/images/home/rating (1).png
+    - assets/images/home/support.png
+    - assets/images/home/validation (1).png
+    - assets/images/home/validation.png
+    - assets/images/home/mobile-phone.png
+    - assets/images/home/expenses (1).png
+    - assets/images/home/expenses.png
+    - assets/images/home/whatsapp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:fulusi/data_Entry/account_Info.dart';
 import 'package:fulusi/home/dashboard.dart';
-
-
 import '../globalWidgets.dart';
 import '../logins/login_screens/register/verify.dart';
+import 'package:fulusi/home/home.dart';
 
 //bool phoneNumber verified
 
@@ -110,7 +109,7 @@ class Carousel extends StatelessWidget {
                  ElavatedButton('New user' , white, mainOrange,(){Navigator.push(
                    context,
                    //MaterialPageRoute(builder: (context) => const AccountInfo()),
-                   MaterialPageRoute(builder: (context) =>  Dash()),
+                   MaterialPageRoute(builder: (context) =>  Home()),
                  );},3),
 
                ],

@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+
+
+
+
+
 class Code extends ChangeNotifier{
   bool successfulCode =false;
   bool wrongCode=false;

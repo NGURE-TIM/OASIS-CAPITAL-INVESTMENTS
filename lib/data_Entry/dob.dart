@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fulusi/data_Entry/photo.dart';
 import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
-import 'package:scroll_date_picker/scroll_date_picker.dart';
+
 
 import 'income.dart';
 DateTime selectedDate = DateTime.now();
@@ -59,13 +61,15 @@ class _BirthdayState extends State<Birthday> {
 
                     color: Colors.grey.shade700,
                   ),
-                  child: buildScrollDatePicker(
+                  child:null
+                  /*buildScrollDatePicker(
                           ( value) {
                           selectedDate = value;
 
                       }
 
-                  ),
+                  ),*/
+
                 ),
                 const SizedBox(
                   height: 30,
@@ -90,15 +94,15 @@ class _BirthdayState extends State<Birthday> {
         )
     ));
   }
-
-  ScrollDatePicker buildScrollDatePicker(Function(DateTime) onChanged ) {
+/* ScrollDatePicker buildScrollDatePicker(Function(DateTime) onChanged ) {
     return ScrollDatePicker(
 
                   selectedDate: selectedDate,
                   locale: const Locale('en'),
                   onDateTimeChanged: onChanged,
                 );
-  }
+  }*/
+
 
 }
 

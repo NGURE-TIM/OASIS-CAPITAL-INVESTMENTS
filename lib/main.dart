@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fulusi/splashPages/splash.dart';
+import 'package:fulusi/themes/theme.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
@@ -27,11 +28,8 @@ return MultiProvider(
   ],
   child:   MaterialApp(
   debugShowCheckedModeBanner: false,
-  title: 'Fulusi',
-  theme: ThemeData(
-    brightness: Brightness.dark,
-    fontFamily:'Roboto',
-  ),
+  title: 'Oasis',
+  theme: AppTheme.Theme(),
   home: const Splash(),
   ),
 );

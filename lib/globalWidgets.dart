@@ -15,7 +15,6 @@ class ElavatedButton extends StatelessWidget {
 
   ElavatedButton(this.text,this.textColor,this.bodyColor , this.onPressed ,this.elavation );
 
-
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed:onPressed,
