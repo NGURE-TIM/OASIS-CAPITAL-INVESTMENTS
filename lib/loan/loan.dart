@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+
+
 bool showContainer =true;
-double limit=0;
+bool isChecked= false;
+
 const khintstyle=TextStyle(
     color:grey,
 );
-List<String> limits =['14 Days/2 Installments',
+List<String> limits =['7 Days/1 Installments','14 Days/2 Installments',
   '21 Days/3 Installments','28 Days/4 Installments'
 ];
 String selectedItem ='';
-
+double lowerLimit=0;
 
 class Loan extends StatefulWidget {
   const Loan({Key? key}) : super(key: key);
@@ -23,7 +29,7 @@ class Loan extends StatefulWidget {
   State<Loan> createState() => _LoanState();
 }
 class _LoanState extends State<Loan> {
-  double lowerLimit=0;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -200,6 +206,8 @@ class _LoanState extends State<Loan> {
                                       onDragging: (handerIndex,lowerValue ,upperLimit){
                                           setState(() {
                                             lowerLimit=lowerValue;
+                                            Provider.of<Loans>(context , listen: false).findPrincipal(lowerValue);
+                                            Provider.of<Loans>(context , listen: false).getInterest();
                                           });
                                     }
                                     ),
@@ -236,7 +244,10 @@ class _LoanState extends State<Loan> {
                                 ),
                                 DropdownSearch<String>(
                                   onChanged: (value){
-                                    limit=value! as double;
+
+                                    selectedItem=value! ;
+                                    Provider.of<Loans>(context , listen: false).calculateTime(selectedItem);
+                                    Provider.of<Loans>(context , listen: false).getInterest();
                                   },
                                   popupProps:  PopupProps.menu(
                                     showSelectedItems: true,
@@ -328,28 +339,155 @@ class _LoanState extends State<Loan> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           width: double.infinity,
-                    
+
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child:  Consumer<Loans>(
+    builder:(context,dataProviderModel,child){
+                             return Column(
+
+                                crossAxisAlignment:CrossAxisAlignment.start ,
+                                children: [
+                                                  buildRow(context ,'Pay weekly', dataProviderModel.weekly.toInt().toString()),
+                                                  buildRow(context ,'Total interest', dataProviderModel.interest.toInt().toString()),
+                                                  buildRow(context ,'Disbursement charges', '- - -'),
+                                  LayoutBuilder(
+                                    builder: (BuildContext context, BoxConstraints constraints) {
+
+                                      final dividerWidth = 18; // Width of each divider
+                                      final availableWidth =constraints.maxWidth ;
+                                      final numberOfDividers = (availableWidth / (dividerWidth)).floor(); // Adding 2 for the padding
+
+                                      return Row(
+                                          children: List.generate( numberOfDividers, (index) =>
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 8),
+                                                child: SizedBox(width: 10,
+
+                                                  child: const Divider(
+
+                                                    thickness: 2,
+                                                    color: grey,
+                                                  ),
+                                                ),
+                                              ),
+
+                                          ),
+                                      );
+                                    },
+                                  ),
+                                  buildRow(context ,'Total amount payable', dataProviderModel.total.toInt().toString()),
+
+                                  buildRow(context ,'Due date', DateFormat('EEEE d/MM/yy').format(dataProviderModel.dateDue)),
+
+                                  LayoutBuilder(
+                                    builder: (BuildContext context, BoxConstraints constraints) {
+                                      final dividerWidth = 18; // Width of each divider
+                                      final availableWidth =constraints.maxWidth ;
+                                      final numberOfDividers = (availableWidth / (dividerWidth)).floor(); // Adding 2 for the padding
+
+                                      return Row(
+                                        children: List.generate( numberOfDividers, (index) =>
+                                            Padding(
+                                              padding: const EdgeInsets.only(right: 8),
+                                              child: SizedBox(width: 10,
+
+                                                child: const Divider(
+
+                                                  thickness: 2,
+                                                  color: grey,
+                                                ),
+                                              ),
+                                            ),
+
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+    }
+                            ),
+                          ) ,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:10,right: 10),
+                  child: Column(
+                    children: [
+                      Material(
+                        shadowColor: mainOrange.withOpacity(0.6),
+                        elevation:2,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          width: double.infinity,
+
                           child: Padding(
                             padding: const EdgeInsets.all(12),
                             child: Column(
-                    
+
                               crossAxisAlignment:CrossAxisAlignment.start ,
                               children: [
-                    
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 0,bottom: 20),
-                                  child: Text(
-                                      'Pay Weekly',
-                                      style: Theme.of(context).textTheme.displayMedium),
-                                ),
-                                Text(
-                                    'Total Interest',
-                                    style: Theme.of(context).textTheme.displayMedium),
-                                Text(
-                                    'Disbursement charges',
-                                    style: Theme.of(context).textTheme.displayMedium),
+Row(
 
-                    
+  children: [
+    buildText(context ,'Mpesa account'),
+                            Spacer(),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 0,bottom: 5),
+                              child: Text(
+                                  '(0748708055)',
+                                  style: TextStyle(
+    color: mainBlue,
+     fontWeight: FontWeight.w600,
+    ),
+                              )                         ),
+    SizedBox(child: IconButton(
+        onPressed: (){
+          //:todo allow member to edit
+        }, icon:Icon(Icons.edit),
+      iconSize: 20,
+    ))
+  ],
+),
+                                Row(
+                                  children: [
+                                    buildText(context ,'Guarantor number'),
+                                    Spacer(),
+                                    const Padding(
+                                        padding: EdgeInsets.only(top: 0,bottom: 5),
+                                        child: Text(
+                                          '(xxxx)',
+                                          style: TextStyle(
+                                            color: mainBlue,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        )                         ),
+                                        SizedBox(
+                                        child: Material(
+                                        type: MaterialType.transparency,
+    child: IconButton(
+    onPressed: () {
+      //:todo allow member to edit
+    },
+    icon: Icon(Icons.edit),
+    iconSize: 20,
+    padding: EdgeInsets.zero, // Ensure zero padding
+    ),
+    ),
+    ),
+
+    ],
+                                ),
+
                               ],
                             ),
                           ) ,
@@ -358,13 +496,104 @@ class _LoanState extends State<Loan> {
                     ],
                   ),
                 ),
-                    
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Checkbox(value: isChecked, onChanged:(value){
+                        setState(() {
+                          isChecked=value!;
+                        });
+                      } ),
+                      Expanded(
+                        child:  RichText(
+                          text:  TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "I accept ",
+                                style: TextStyle(
+                fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "Loan agreement",
+
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: seedBlue,
+                                ),
+                              ),
+
+
+                            ],
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: ElevatedButton(onPressed:(){
+                          if(isChecked){
+                            //todo: process loan
+                          }
+                        },
+                          style:
+
+                          ElevatedButton.styleFrom(
+                              fixedSize: Size(100, 45),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                              elevation: 3, backgroundColor: mainOrange
+                          ), child: Text(
+                            'Loan',
+                            style: TextStyle(
+                                color: white,
+                                fontSize:15
+                            ),
+                          ),
+                        ),
+
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
         )),
       ],
     );
+  }
+
+  Row buildRow(BuildContext context , String text  , String value ) {
+    return Row(
+                    children: [
+                      buildText(context ,text),
+                      Spacer(),
+                     Text(
+                              value,
+                              style: TextStyle(
+                                color: mainBlue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+
+                    ],
+                  );
+  }
+
+  Padding buildText(BuildContext context ,String text) {
+    return Padding(
+                                padding: const EdgeInsets.only(top: 0,bottom: 5),
+                                child: Text(
+
+                                    text,
+                                    style: TextStyle(
+    fontSize: 15,
+    color: black
+    ),
+                              ));
   }
 }
 

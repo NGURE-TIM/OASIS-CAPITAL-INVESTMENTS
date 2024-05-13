@@ -3,6 +3,48 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 
 
+class Loans extends ChangeNotifier{
+  late DateTime  dateDue= DateTime.now();
+  late double principal ;
+ final double rate = 0.04;
+ late double interest =0;
+ late double weekly=0;
+ late double total=0;
+late int time ;
+ calculateTime(selectedItem){
+    if (selectedItem=='7 Days/1 Installments'){
+     time=1;
+     dateDue =DateTime.now().add(Duration(days: 7));
+   }
+  else if (selectedItem=='14 Days/2 Installments'){
+     time=2;
+     dateDue =DateTime.now().add(Duration(days: 14));
+   }
+  else if (selectedItem=='21 Days/3 Installments'){
+     time=3;
+     dateDue =DateTime.now().add(Duration(days: 21));
+   }
+  else if (selectedItem=='28 Days/4 Installments'){
+     time=4;
+     dateDue =DateTime.now().add(Duration(days: 28));
+   }
+  else {
+    time =0;
+    }
+
+
+    notifyListeners();
+ }
+ findPrincipal(limit){
+   principal=limit;
+ }
+getInterest (){
+   interest = principal * rate * time;
+   total=principal + interest;
+   weekly= total/time;
+   notifyListeners();
+}
+}
 
 
 

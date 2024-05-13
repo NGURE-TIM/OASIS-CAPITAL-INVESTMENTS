@@ -7,6 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme{
   static  ThemeData Theme(){
     return ThemeData(
+      iconTheme:IconThemeData(
+          color: mainBlue,
+
+      ) ,
       fontFamily:'Roboto',
       appBarTheme: const AppBarTheme(
         surfaceTintColor: mainOrange,
@@ -15,7 +19,7 @@ class AppTheme{
 
       shadowColor: mainOrange,
         iconTheme:IconThemeData(
-            color: mainBlue
+            color: mainOrange
         ),
         elevation: 2
       ),

@@ -25,6 +25,7 @@ return MultiProvider(
     ChangeNotifierProvider(create: (context)=>Code()),
     ChangeNotifierProvider(create: (context)=>VerifyPage()),
     ChangeNotifierProvider(create: (context)=>TimerDuration()),
+    ChangeNotifierProvider(create: (context)=>Loans()),
   ],
   child:   MaterialApp(
   debugShowCheckedModeBanner: false,
