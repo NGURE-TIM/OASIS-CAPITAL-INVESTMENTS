@@ -5,7 +5,6 @@ import 'package:fulusi/themes/theme.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
-
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();
 try {

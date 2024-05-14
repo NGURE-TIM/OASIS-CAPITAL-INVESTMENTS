@@ -148,7 +148,7 @@ class _LoanState extends State<Loan> {
                                         step: 1,
                                         isPercentRange: true,
                                         rangeList: [
-                                          FlutterSliderRangeStep(from: 0, to: 100, step: 5000),
+                                          FlutterSliderRangeStep(from: 0, to: 100, step: 500),
                                         ]
                     
                                       ),
@@ -206,6 +206,8 @@ class _LoanState extends State<Loan> {
                                       onDragging: (handerIndex,lowerValue ,upperLimit){
                                           setState(() {
                                             lowerLimit=lowerValue;
+
+                                            Provider.of<Loans>(context , listen: false).calculateTime(selectedItem);
                                             Provider.of<Loans>(context , listen: false).findPrincipal(lowerValue);
                                             Provider.of<Loans>(context , listen: false).getInterest();
                                           });
@@ -244,7 +246,6 @@ class _LoanState extends State<Loan> {
                                 ),
                                 DropdownSearch<String>(
                                   onChanged: (value){
-
                                     selectedItem=value! ;
                                     Provider.of<Loans>(context , listen: false).calculateTime(selectedItem);
                                     Provider.of<Loans>(context , listen: false).getInterest();
@@ -350,7 +351,7 @@ class _LoanState extends State<Loan> {
                                 children: [
                                                   buildRow(context ,'Pay weekly', dataProviderModel.weekly.toInt().toString()),
                                                   buildRow(context ,'Total interest', dataProviderModel.interest.toInt().toString()),
-                                                  buildRow(context ,'Disbursement charges', '- - -'),
+                                                  buildRow(context ,'Disbursement charges', dataProviderModel.charges.toInt().toString()),
                                   LayoutBuilder(
                                     builder: (BuildContext context, BoxConstraints constraints) {
 

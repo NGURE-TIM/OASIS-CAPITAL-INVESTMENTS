@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-
+import 'package:fulusi/networking/mpesa.dart';
 
 
 class Loans extends ChangeNotifier{
@@ -10,40 +10,76 @@ class Loans extends ChangeNotifier{
  late double interest =0;
  late double weekly=0;
  late double total=0;
-late int time ;
- calculateTime(selectedItem){
-    if (selectedItem=='7 Days/1 Installments'){
-     time=1;
-     dateDue =DateTime.now().add(Duration(days: 7));
-   }
-  else if (selectedItem=='14 Days/2 Installments'){
-     time=2;
-     dateDue =DateTime.now().add(Duration(days: 14));
-   }
-  else if (selectedItem=='21 Days/3 Installments'){
-     time=3;
-     dateDue =DateTime.now().add(Duration(days: 21));
-   }
-  else if (selectedItem=='28 Days/4 Installments'){
-     time=4;
-     dateDue =DateTime.now().add(Duration(days: 28));
-   }
-  else {
-    time =0;
-    }
+ late  double charges=0;
+late double time =0 ;
+ calculateTime(String Item){
+   try {
+     if (Item=='7 Days/1 Installments'){
+       time=1;
+       dateDue =DateTime.now().add(Duration(days: 7));
+     }
+     else if (Item=='14 Days/2 Installments'){
+       time=2;
+       dateDue =DateTime.now().add(Duration(days: 14));
+     }
+     else if (Item=='21 Days/3 Installments'){
+       time=3;
+       dateDue =DateTime.now().add(Duration(days: 21));
+     }
+     else if (Item=='28 Days/4 Installments'){
+       time=4;
+       dateDue =DateTime.now().add(Duration(days: 28));
+     }
+     else {
+       time =0;
+     }
 
-
+   }
+   catch(e){
+     time=0;
+   }
     notifyListeners();
  }
  findPrincipal(limit){
-   principal=limit;
+   try{
+     principal=limit;
+
+     for(var fee in charge){
+if (principal > fee['min'] && principal <= fee['max']){
+  charges=fee['transfer_fee'];
+}
+     }
+   }
+   catch(e){
+     principal=0;
+   }
+
+
  }
+
 getInterest (){
-   interest = principal * rate * time;
-   total=principal + interest;
-   weekly= total/time;
+   try{
+     interest = principal * rate * time;
+     total=principal + interest + charges;
+
+
+     if(time > 0){
+       weekly= total/time;
+     }
+     else {
+       weekly=0;
+     }
+   }
+   catch(e){
+     principal=0;
+     interest=0;
+     weekly=0;
+     total=0;
+   }
+
    notifyListeners();
 }
+
 }
 
 
