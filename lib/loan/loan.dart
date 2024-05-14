@@ -148,7 +148,7 @@ class _LoanState extends State<Loan> {
                                         step: 1,
                                         isPercentRange: true,
                                         rangeList: [
-                                          FlutterSliderRangeStep(from: 0, to: 100, step: 500),
+                                          FlutterSliderRangeStep(from: 0, to: 100, step: 100),
                                         ]
                     
                                       ),
@@ -349,9 +349,9 @@ class _LoanState extends State<Loan> {
 
                                 crossAxisAlignment:CrossAxisAlignment.start ,
                                 children: [
-                                                  buildRow(context ,'Pay weekly', dataProviderModel.weekly.toInt().toString()),
-                                                  buildRow(context ,'Total interest', dataProviderModel.interest.toInt().toString()),
-                                                  buildRow(context ,'Disbursement charges', dataProviderModel.charges.toInt().toString()),
+                                                  buildRow(context ,'Pay weekly', dataProviderModel.weekly.round().toString()),
+                                                  buildRow(context ,'Total interest', dataProviderModel.interest.round().toString()),
+                                                  buildRow(context ,'Disbursement charges', dataProviderModel.charges.round().toString()),
                                   LayoutBuilder(
                                     builder: (BuildContext context, BoxConstraints constraints) {
 
@@ -377,7 +377,7 @@ class _LoanState extends State<Loan> {
                                       );
                                     },
                                   ),
-                                  buildRow(context ,'Total amount payable', dataProviderModel.total.toInt().toString()),
+                                  buildRow(context ,'Total amount payable', dataProviderModel.total.round().toString()),
 
                                   buildRow(context ,'Due date', DateFormat('EEEE d/MM/yy').format(dataProviderModel.dateDue)),
 
