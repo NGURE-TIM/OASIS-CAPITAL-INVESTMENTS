@@ -6,20 +6,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:animated_icon/animated_icon.dart';
 import '../globalWidgets.dart';
 import '../loan/loan.dart';
+
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:fulusi/themes/theme.dart';
+
+import '../networking/whatsapp.dart';
 
  List<String> imagePaths =['assets/images/home/mobile-phone.png','assets/images/home/validation.png','assets/images/home/expenses.png'];
  List<String> steps =['Fast application','Guarantor approval','Instant disbursement'];
  List <bool > stepsSates=[true,true,false];
 class Dash extends StatefulWidget {
-
   @override
   State<Dash> createState() => _DashState();
 }
-
 class _DashState extends State<Dash> {
-
-
   @override
   Widget build(BuildContext context) {
     final Size screensize=MediaQuery.of(context).size;
@@ -34,12 +34,17 @@ class _DashState extends State<Dash> {
               Container(
               height: 200,
               width: double.infinity,
-              decoration:  const BoxDecoration(
+              decoration:   BoxDecoration(
+                  border:Border(
+                      bottom: BorderSide(
+                        color: mainOrange,
+                        width: 7
+                      )),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40),
                 ),
-                  color: Color.fromRGBO(250, 235, 215, 0.4)
+                  color: mainOrange.withOpacity(0.09)
               ),
             ),
                 Positioned(
@@ -146,52 +151,87 @@ class _DashState extends State<Dash> {
                           }).toList(),
                         ),*/
 
-                        Container(
-
-                          width: double.infinity,
-                          decoration: BoxDecoration(
+                        Material(
+                          shadowColor: mainOrange,
+                          elevation: 3,
+                          shape:RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            image : const DecorationImage(
-                              image: AssetImage("assets/images/container.jpg"),
-                              fit: BoxFit.fill,
-                            ),
                           ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height:20,
-                                ),
-                                const Text(
-                                  'You can get upto',
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize:20
-                                  ),),const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'Ksh 1,000,000',
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize:40
-                                  ),),
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                          child: Container(
+                          height: 180,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
 
-                                ElavatedButton('APPLY NOW' , mainOrange, white,() {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Loan()),
-                                  );
-                                },3),
-                                const SizedBox(
-                                  height: 20,
+                              borderRadius: BorderRadius.circular(20),
+                              color: white
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'You can get upto ',
+                                      style: TextStyle(
+                                          color: grey,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize:20
+                                      ),),
+                                    Row(
+                                      children: [
+
+
+                                        SizedBox(
+                                          child: ClipRRect(
+
+                                            borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
+                                            child: Image.asset(
+                                              "assets/images/home/Screenshot_2024-05-15_174843-removebg.png",
+                                              width: 80,
+                                              height: 80,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        const Text(
+                                          'Ksh 100,000',
+                                          style: TextStyle(
+                                              color: mainBlue,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize:30
+                                          ),),
+
+                                      ],
+                                    ),
+
+                                    Center(
+                                      child: ElevatedButton(onPressed:(){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Loan()),
+                                        );
+                                      },
+                                        style:
+
+                                        ElevatedButton.styleFrom(
+                                            fixedSize: Size(200, 35),
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                            elevation: 3, backgroundColor: mainOrange
+                                        ), child: Text(
+                                          'APPLY NOW',
+                                          style: TextStyle(
+                                              color: white,
+                                              fontSize:15
+                                          ),
+                                        ),
+                                      ),
+
+                                    ),
+
+
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
@@ -238,7 +278,7 @@ class _DashState extends State<Dash> {
                                   Row(
                                    children: [
                                      buildRow('KES100K','Daily Payments','assets/images/home/payment-method.png'),
-                                     Spacer(),
+                            Spacer(),
                                      buildRow('100+','Happy Customers','assets/images/home/rating (1).png'),
                                      //buildRow('10+','Experts','assets/images/home/support.png'),
                                    ],
@@ -270,9 +310,9 @@ class _DashState extends State<Dash> {
                           ),
                           child: InkWell(
                             onTap: (
-                                //:todo whatsapp
-                                ){
 
+                                ){
+                              Whatsapp.launchWhatsAppUri();
                             },
                             highlightColor: white,
                             splashColor: null ,
@@ -410,19 +450,21 @@ color: white
     return Column(
                         children: [
                           Material(
-                            color: Color.fromRGBO(250, 235, 215, 0.9),
-                            shadowColor: mainBlue,
+                            color: white,
+                            shadowColor: mainOrange,
                             shape:RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            elevation: 3,
+
+                            elevation: 2,
                             child: Container(
                               height: 60,
                               width: 60,
                               decoration:   BoxDecoration(
+
                                   borderRadius: BorderRadius.circular(15),
 
-                                  color: Color.fromRGBO(250, 235, 215, 0.9)
+                                  color: mainOrange.withOpacity(0.09)
                               ),
                               child:Center(
                                 child: IconButton(

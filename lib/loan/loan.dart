@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fulusi/networking/whatsapp.dart';
 import 'package:intl/intl.dart';
-
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -42,7 +42,9 @@ class _LoanState extends State<Loan> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20),
-                child: IconButton(onPressed: (){},
+                child: IconButton(onPressed: (){
+                  Whatsapp.launchWhatsAppUri();
+                },
                 icon: Icon(
                   Icons.headset_mic_outlined
                 ),
@@ -383,7 +385,7 @@ class _LoanState extends State<Loan> {
 
                                   LayoutBuilder(
                                     builder: (BuildContext context, BoxConstraints constraints) {
-                                      final dividerWidth = 18; // Width of each divider
+                                      final dividerWidth = 18;
                                       final availableWidth =constraints.maxWidth ;
                                       final numberOfDividers = (availableWidth / (dividerWidth)).floor(); // Adding 2 for the padding
 

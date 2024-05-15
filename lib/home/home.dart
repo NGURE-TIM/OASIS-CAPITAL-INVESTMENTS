@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
 @override
 Widget build(BuildContext context) {
 return Scaffold(
-  backgroundColor: mainBlue,
+  backgroundColor: mainOrange,
 bottomNavigationBar: StylishBottomBar(
   option: DotBarOptions(
     dotStyle: DotStyle.tile,
