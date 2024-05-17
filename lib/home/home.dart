@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:fulusi/home/profile.dart';
+
 import '../colors/colors.dart';
 import 'package:fulusi/home/dashboard.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+
 class Home extends StatefulWidget {
 const Home({super.key});
 
@@ -41,23 +44,12 @@ bottomNavigationBar: StylishBottomBar(
     ),
     BottomBarItem(
         icon: const Icon(
-            Icons.account_balance_wallet_outlined
-        ),
-        selectedIcon: Icon(
-            Icons.account_balance_wallet_sharp
-        ),
-        title: const Text('Account'),
-        selectedColor: mainBlue,
-        unSelectedColor: grey
-    ),
-    BottomBarItem(
-        icon: const Icon(
             Icons.person_outline_sharp
         ),
         selectedIcon: Icon(
             Icons.person
         ),
-        title: const Text('Me'),
+        title: const Text('Profile'),
         selectedColor: mainBlue,
         unSelectedColor: grey
     )
@@ -75,9 +67,9 @@ child: PageView(
   physics: NeverScrollableScrollPhysics(),
 controller: controller,
 children:  [
+
 Dash(),
-Center(child: Text('Star')),
-Center(child: Text('Style')),
+  Profile(),
 ],
 ),
 ),

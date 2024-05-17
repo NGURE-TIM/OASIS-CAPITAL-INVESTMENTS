@@ -38,7 +38,7 @@ class _DashState extends State<Dash> {
                   border:Border(
                       bottom: BorderSide(
                         color: mainOrange,
-                        width: 7
+                        width: 12
                       )),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
