@@ -122,6 +122,13 @@ flutter:
     - assets/images/home/expenses (1).png
     - assets/images/home/expenses.png
     - assets/images/home/whatsapp.png
+    - assets/images/profile/chat.png
+    - assets/images/profile/cogwheels.png
+    - assets/images/profile/feedback.png
+    - assets/images/profile/information.png
+    - assets/images/profile/padlock.png
+    - assets/images/profile/ticket.png
+    - assets/images/profile/user (1).png
     - assets/images/home/Screenshot_2024-05-15_174843-removebg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
