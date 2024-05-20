@@ -65,7 +65,7 @@ class _FAQState extends State<FAQ> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left:10,right: 10),

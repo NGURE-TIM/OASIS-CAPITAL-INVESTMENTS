@@ -17,6 +17,7 @@ class Account extends StatelessWidget {
         ),
       SafeArea(child: Scaffold(
         appBar: AppBar(
+          foregroundColor: white,
           title: Text(
 
               'Review Application Profile',

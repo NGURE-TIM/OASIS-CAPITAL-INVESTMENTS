@@ -15,7 +15,7 @@ class AppTheme{
       appBarTheme: const AppBarTheme(
         surfaceTintColor: mainOrange,
         centerTitle: true,
-        foregroundColor: mainBlue,
+        foregroundColor: mainOrange,
 
       shadowColor: mainOrange,
         iconTheme:IconThemeData(

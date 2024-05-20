@@ -3,8 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fulusi/home/Profile/about%20us.dart';
 import 'package:fulusi/home/Profile/feedback.dart';
 import 'package:animated_icon/animated_icon.dart';
+import 'package:fulusi/home/Profile/settings.dart';
 import '../globalWidgets.dart';
 import '../loan/loan.dart';
 import '../networking/whatsapp.dart';
@@ -181,13 +183,13 @@ leading:null,
                                         buildPadding('Settings', 'assets/images/profile/cogwheels.png',(){
                                           Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => Account()),
+                                            MaterialPageRoute(builder: (context) => Settings()),
                                           );
                                         }),
                                         buildPadding('About us', 'assets/images/profile/information.png',(){
                                           Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => Account()),
+                                            MaterialPageRoute(builder: (context) => About()),
                                           );
                                         }),
 

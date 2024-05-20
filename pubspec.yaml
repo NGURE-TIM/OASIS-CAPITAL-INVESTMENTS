@@ -123,6 +123,8 @@ flutter:
     - assets/images/home/expenses.png
     - assets/images/home/whatsapp.png
     - assets/images/profile/chat.png
+    - assets/images/profile/complain.png
+    - assets/images/profile/caution.png
     - assets/images/profile/cogwheels.png
     - assets/images/profile/feedback.png
     - assets/images/profile/information.png
