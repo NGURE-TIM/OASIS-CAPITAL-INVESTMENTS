@@ -15,13 +15,13 @@ class AppTheme{
       appBarTheme: const AppBarTheme(
         surfaceTintColor: mainOrange,
         centerTitle: true,
-        foregroundColor: mainOrange,
+        foregroundColor:mainOrange,
 
       shadowColor: mainOrange,
         iconTheme:IconThemeData(
             color: mainOrange
         ),
-        elevation: 2
+        elevation: 0.5
       ),
       primaryColor: mainOrange,
       scaffoldBackgroundColor: white,

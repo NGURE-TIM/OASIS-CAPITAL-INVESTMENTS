@@ -286,6 +286,6 @@ class About extends StatelessWidget {
         ))
       ],
 
-    );;
+    );
   }
 }

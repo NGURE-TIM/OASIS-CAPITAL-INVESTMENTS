@@ -42,7 +42,6 @@ dependencies:
   cloud_firestore: ^4.14.0
   dashed_circular_progress_bar: ^0.0.6
   slide_countdown: ^1.5.0
-  simple_circular_progress_bar: ^1.0.2
   dropdown_textfield: ^1.0.8
   flutter_dropdown_search: ^0.0.4
   firebase_database: ^10.4.0
@@ -67,6 +66,7 @@ dependencies:
   url_launcher: ^6.2.6
   blurrycontainer: ^2.1.0
   flutter_animated_button: ^2.0.3
+  simple_circular_progress_bar: ^1.0.2
 
 
 dev_dependencies:
@@ -131,6 +131,7 @@ flutter:
     - assets/images/profile/padlock.png
     - assets/images/profile/ticket.png
     - assets/images/profile/user (1).png
+    - assets/images/MPESA/MPESA.jpg
     - assets/images/home/Screenshot_2024-05-15_174843-removebg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

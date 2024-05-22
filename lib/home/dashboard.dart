@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_icon/animated_icon.dart';
+import 'package:fulusi/home/repayment..dart';
 import '../globalWidgets.dart';
 import '../loan/loan.dart';
 
@@ -242,11 +243,18 @@ class _DashState extends State<Dash> {
                          
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            homepageicons(Icons.send_to_mobile_sharp,'Repayment' ),
+                            homepageicons(Icons.send_to_mobile_sharp,'Repayment',(){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Repayment()),
+                              );
+                            } ),
                             const SizedBox(
                               width: 15,
                             ),
-                            homepageicons(Icons.history,'Transactions' ),
+                            homepageicons(Icons.history,'Transactions',(){
+                              //todo:history
+                            } ),
                             const SizedBox(
                               width: 15,
                             ),
@@ -255,7 +263,9 @@ class _DashState extends State<Dash> {
                               width: 15,
                             ),*/
 
-                            homepageicons(Icons.share_sharp,'Invite' ),
+                            homepageicons(Icons.share_sharp,'Invite',(){
+                              //todo:invite
+                            } ),
                           ],
                         ),
                         const SizedBox(
@@ -446,7 +456,7 @@ color: white
 
 
 
-  Column homepageicons(IconData icons , String action) {
+  Column homepageicons(IconData icons , String action ,Function() onPress) {
     return Column(
                         children: [
                           Material(
@@ -470,9 +480,7 @@ color: white
                                 child: IconButton(
                                   color: mainBlue,
                                   iconSize: 30,
-                                  onPressed: () {
-                                    //todo: action
-                                  },
+                                  onPressed: onPress,
                                   icon:  Icon(
                                     icons
                                   ),
