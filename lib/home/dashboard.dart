@@ -125,7 +125,7 @@ class _DashState extends State<Dash> {
 
                           ],
                         ),const SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                       /*FlutterCarousel(
                           options: CarouselOptions(
@@ -168,66 +168,112 @@ class _DashState extends State<Dash> {
                             ),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(20.0),
                                 child: Column(
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+
+                                    Text(
                                       'You can get upto ',
                                       style: TextStyle(
+                                          shadows: [
+                                            Shadow(
+                                              color: black.withOpacity(0.3), // Shadow color
+                                              offset: Offset(3, 3), // Offset of the shadow
+                                              blurRadius: 8, // Blur radius of the shadow
+                                            ),
+                                          ],
                                           color: grey,
                                           fontWeight: FontWeight.w400,
-                                          fontSize:20
+                                          fontSize:15
                                       ),),
-                                    Row(
-                                      children: [
 
 
-                                        SizedBox(
-                                          child: ClipRRect(
+                                    Text(
+                                      'Ksh 100,000',
 
-                                            borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
-                                            child: Image.asset(
-                                              "assets/images/home/Screenshot_2024-05-15_174843-removebg.png",
-                                              width: 80,
-                                              height: 80,
-                                              fit: BoxFit.cover,
+                                      style: TextStyle(
+
+                                        color: mainBlue,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize:30,
+                                        shadows: [
+                                          Shadow(
+                                            color: black.withOpacity(0.3), // Shadow color
+                                            offset: Offset(3, 3), // Offset of the shadow
+                                            blurRadius: 3, // Blur radius of the shadow
+                                          ),
+                                        ],
+                                      ),),
+
+SizedBox(
+  height: 30,
+),
+
+                                    Center(
+                                      child: Container(
+                                        height: 40,
+                                        width: 200,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color.fromRGBO(255, 176, 51, 1.0),
+                                              Color.fromRGBO(255, 176, 51, 1.0),
+                                              Color.fromRGBO(254, 128, 51, 1.0),
+                                              Color.fromRGBO(254, 128, 51, 1.0),
+                                            ],
+                                            stops: [0.1, 0.2, 0.7, 0.9],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: black.withOpacity(0.3), // Shadow color
+                                              offset: Offset(3, 3), // Offset of the shadow
+                                              blurRadius: 3, // Blur radius of the shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            // Your onPressed code here
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => Loan()),
+                                            );
+                                          },
+                                          onHover: null,
+                                          onLongPress: null,
+                                          onFocusChange: null,
+                                          autofocus: false,
+                                          style: ElevatedButton.styleFrom(
+
+                                            elevation: 0,
+                                            backgroundColor: Colors.transparent, // Make button background transparent
+                                          ),
+                                          child: Text(
+                                            'APPLY NOW',
+                                            style: TextStyle(
+                                              color: white,
+                                              fontSize: 20,
+                                              shadows: [
+                                                Shadow(
+                                                  color: black.withOpacity(0.3), // Shadow color
+                                                  offset: Offset(3, 3), // Offset of the shadow
+                                                  blurRadius: 3, // Blur radius of the shadow
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                        const Text(
-                                          'Ksh 100,000',
-                                          style: TextStyle(
-                                              color: mainBlue,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize:30
-                                          ),),
-
-                                      ],
-                                    ),
-
-                                    Center(
-                                      child: ElevatedButton(onPressed:(){
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => Loan()),
-                                        );
-                                      },
-                                        style:
-
-                                        ElevatedButton.styleFrom(
-                                            fixedSize: Size(200, 35),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                            elevation: 3, backgroundColor: mainOrange
-                                        ), child: Text(
-                                          'APPLY NOW',
-                                          style: TextStyle(
-                                              color: white,
-                                              fontSize:15
-                                          ),
-                                        ),
                                       ),
-
                                     ),
+
 
 
                                   ],
@@ -382,6 +428,22 @@ color: white
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 50,
+                  right:10,
+                  child: SizedBox(
+                    child: ClipRRect(
+
+                      borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
+                      child: Image.asset(
+                        "assets/images/home/box/Screenshot_2024-05-23_150144-removebg-preview.png",
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -466,22 +528,39 @@ color: white
                               borderRadius: BorderRadius.circular(15),
                             ),
 
-                            elevation: 2,
+                            elevation: .5,
                             child: Container(
                               height: 60,
                               width: 60,
                               decoration:   BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      white,
+                                      Color.fromRGBO(255, 242, 216, 1),
+                                      Color.fromRGBO(255, 212, 181, 1),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
 
                                   borderRadius: BorderRadius.circular(15),
 
-                                  color: mainOrange.withOpacity(0.09)
+
                               ),
                               child:Center(
                                 child: IconButton(
-                                  color: mainBlue,
+
+                                  color:mainBlue,
                                   iconSize: 30,
                                   onPressed: onPress,
                                   icon:  Icon(
+                                      shadows: [
+                                        Shadow(
+                                          color: black.withOpacity(0.3), // Shadow color
+                                          offset: Offset(3, 3), // Offset of the shadow
+                                          blurRadius: 7, // Blur radius of the shadow
+                                        ),
+                                      ],
                                     icons
                                   ),
 

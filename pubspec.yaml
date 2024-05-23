@@ -67,6 +67,7 @@ dependencies:
   blurrycontainer: ^2.1.0
   flutter_animated_button: ^2.0.3
   simple_circular_progress_bar: ^1.0.2
+  badges: ^3.1.2
 
 
 dev_dependencies:
@@ -133,6 +134,17 @@ flutter:
     - assets/images/profile/user (1).png
     - assets/images/MPESA/MPESA.jpg
     - assets/images/home/Screenshot_2024-05-15_174843-removebg.png
+    - assets/images/MPESA/coupon.png
+    - assets/images/MPESA/coupon (1).png
+    - assets/images/MPESA/coupon (2).png
+    - assets/images/MPESA/ticket.png
+    - assets/images/MPESA/ticket (1).png
+    - assets/images/MPESA/ticket (2).png
+    - assets/images/MPESA/ticket (3).png
+    - assets/images/MPESA/tickets.png
+    - assets/images/home/box/Screenshot_2024-05-23_145830-removebg-preview.png
+    - assets/images/home/box/Screenshot_2024-05-23_150144-removebg-preview.png
+    - assets/images/home/box/3d-render-black-hand-put-gold-coin-into-piggy-bank.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
