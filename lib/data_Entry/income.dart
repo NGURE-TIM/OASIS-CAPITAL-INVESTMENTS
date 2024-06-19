@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:provider/provider.dart';
+import '../global/size_config.dart';
 import '../globalWidgets.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -43,8 +44,8 @@ class _IncomeState extends State<Income> {
                  Center(
                   child:  GifView.asset(
                     'assets/images/account_Info/Income/Money income.gif',
-                    height: 300,
-                    width: 300,
+                    width:  SizeConfig.screenWidth *1,
+                    height: SizeConfig.screenHeight * 0.3,
                     frameRate: 30, // default is 15 FPS
                   )
                 ),

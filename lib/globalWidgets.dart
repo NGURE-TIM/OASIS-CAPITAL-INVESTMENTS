@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
 import 'colors/colors.dart';
+import 'global/size_config.dart';
 
 class ElavatedButton extends StatelessWidget {
  Function() onPressed ;
@@ -17,18 +18,23 @@ class ElavatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return ElevatedButton(onPressed:onPressed,
       style:
 
       ElevatedButton.styleFrom(
-    fixedSize: Size(150, 45),
+    fixedSize: Size(
+       SizeConfig.screenWidth * 0.45,
+        SizeConfig.screenHeight * 0.06
+
+    ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           elevation: elavation, backgroundColor: bodyColor
       ), child: Text(
         text,
         style: TextStyle(
             color: textColor,
-                fontSize:17
+                fontSize:SizeConfig.screenWidth * 0.045,
         ),
       ),
     );

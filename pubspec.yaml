@@ -42,7 +42,6 @@ dependencies:
   cloud_firestore: ^4.14.0
   dashed_circular_progress_bar: ^0.0.6
   slide_countdown: ^1.5.0
-  dropdown_textfield: ^1.0.8
   flutter_dropdown_search: ^0.0.4
   firebase_database: ^10.4.0
   flutter_carousel_widget: ^2.2.0
@@ -68,6 +67,7 @@ dependencies:
   flutter_animated_button: ^2.0.3
   simple_circular_progress_bar: ^1.0.2
   badges: ^3.1.2
+  flutter_screenutil: ^5.9.3
 
 
 dev_dependencies:

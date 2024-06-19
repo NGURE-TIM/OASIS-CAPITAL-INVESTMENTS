@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fulusi/data_Entry/photo.dart';
+import '../global/size_config.dart';
 import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
 
@@ -30,10 +31,10 @@ class _BirthdayState extends State<Birthday> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(
+                Center(
                   child: Image(
-                    width: 400,
-                    height: 400,
+                    width:  SizeConfig.screenWidth *1,
+                    height: SizeConfig.screenHeight * 0.5,
                     image: Svg('assets/images/account_Info/DOB/Calendar-rafiki.svg'),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import '../Database/firebase.dart';
+import '../global/size_config.dart';
 import '../globalWidgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
@@ -29,6 +30,7 @@ class _ReferralState extends State<Referral> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(child: Scaffold(
         backgroundColor: white,
         body: Padding(
@@ -37,9 +39,9 @@ class _ReferralState extends State<Referral> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Image(
-                  width: 400,
-                  height: 400,
+                Image(
+                  width:  SizeConfig.screenWidth *0.9,
+                  height: SizeConfig.screenHeight * 0.54,
                   image: Svg('assets/images/account_Info/Code/undraw_referral_re_0aji.svg'),
                 ),
                 const SizedBox(
@@ -56,8 +58,8 @@ class _ReferralState extends State<Referral> {
                   FontWeight.w400,
                   grey,
                 ),
-                const SizedBox(
-                  height: 30,
+                 SizedBox(
+                  height: SizeConfig.screenHeight * 0.05,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -137,6 +139,7 @@ class OtpInput extends StatelessWidget {
         maxLength: 1,
         cursorColor: seedBlue,
         decoration:const InputDecoration(
+          counterText: '',
             hintText: 'x',
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10))

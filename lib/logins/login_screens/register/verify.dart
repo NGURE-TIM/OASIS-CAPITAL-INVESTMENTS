@@ -5,6 +5,7 @@ import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:fulusi/home/dashboard.dart';
+import '../../../global/size_config.dart';
 import '../../../globalWidgets.dart';
 import '../../../stateManagement_provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -64,12 +65,13 @@ class Verify extends StatefulWidget {
 class _VerifyState extends State<Verify> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     final Size screensize=MediaQuery.of(context).size;
     return  Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          width: screensize.width,
-          height: screensize.height,
+          width: SizeConfig.screenWidth,
+          height: SizeConfig.screenHeight,
           child: Stack(
             children: [
               Image.asset(
@@ -80,7 +82,7 @@ class _VerifyState extends State<Verify> {
               ),
               Container(
                 decoration: BoxDecoration(
-
+        
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: const Alignment(0.0 ,0.55),
@@ -100,18 +102,25 @@ class _VerifyState extends State<Verify> {
                       Container(
                         height: 50,
                       ),
-                      SizedBox(
-                        height: 150,
-                        width: 150,
-                        child: Image.asset("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: SizedBox(
+                            child: Image.asset("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
+                          ),
+                        ),
                       ),
-                      const Center(
-                        child: Text(
-                          'Your trusted partners.',
-                          style: TextStyle(
-                            color: white,
-                              fontWeight: FontWeight.w400,
-                              fontSize:30
+                      Flexible(
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            'Your trusted partners.',
+                            style: TextStyle(
+                              color: white,
+                                fontWeight: FontWeight.w400,
+                                fontSize:30
+                            ),
                           ),
                         ),
                       ),
@@ -119,72 +128,79 @@ class _VerifyState extends State<Verify> {
                         height:10,
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60,right: 60),
-                        child:Consumer<VerifyPage>(
-                        builder:(context,dataProviderModel,child){
-                          return  Text(
-                            'Please verify your ${dataProviderModel.title} to continue',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                color: white,
+                      Flexible(
+                      flex:1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 60,right: 60),
+                          child:Consumer<VerifyPage>(
+                          builder:(context,dataProviderModel,child){
+                            return  Text(
+                              'Please verify your ${dataProviderModel.title} to continue',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: white,
 
-                                fontWeight: FontWeight.w500,
-                                fontSize:18
-                            ),
-                          );}
+                                  fontWeight: FontWeight.w500,
+                                  fontSize:18
+                              ),
+                            );}
+                          ),
                         ),
                       ),
                       const SizedBox(
                         height:50,
                       ),
 
-                      Consumer<VerifyPage>(
-                          builder:(context,dataProviderModel,child) {
-                            return dataProviderModel.upDateTextField ? Container(
+                      Flexible(
+                        flex: 2,
+                        child: Consumer<VerifyPage>(
+                            builder:(context,dataProviderModel,child) {
+                              return dataProviderModel.upDateTextField ?
+                              Container(
+                                margin: EdgeInsets.only(left: 20 ,right: 20),
+                                child: buildTextField(context, (value) {
+                                  phoneNumber=int.tryParse(value!)??0 ;
+                                  number=phoneNumber.toString();
+                                  if (number.length == 12) {
+                                    setState(() {
+                                      textField = true;
+                                      signInUser('+$number', context);
+                                      Future.delayed( const Duration(milliseconds: 100));
+                                      bottom(context);
+                                      errorcode = 2;
+                                    });
+                                  }
+                                  else if (number.length < 12 || number.length >12) {
+                                    //:todo fix the over 12 digits i suggest using contoller
+                                    textField = false;
+                                    setState(() {
+                                      errorcode = 0;
+                                    });
+                                  }
+                                }, phoneNumberController, TextInputType.phone,
+                                    'Phone Number', 'xxx-xxx-xxx'),
+                              ) : Container(
                               width: 300,
                               child: buildTextField(context, (value) {
-                                phoneNumber=int.tryParse(value!)??0 ;
-                                number=phoneNumber.toString();
-                                if (number.length == 12) {
-                                  setState(() {
-                                    textField = true;
-                                    signInUser('+$number', context);
-                                    Future.delayed( const Duration(milliseconds: 100));
-                                    bottom(context);
-                                    errorcode = 2;
-                                  });
-                                }
-                                else if (number.length < 12 || number.length >12) {
-                                  //:todo fix the over 12 digits i suggest using contoller
-                                  textField = false;
-                                  setState(() {
-                                    errorcode = 0;
-                                  });
-                                }
-                              }, phoneNumberController, TextInputType.phone,
-                                  'Phone Number', 'xxx-xxx-xxx'),
-                            ) : Container(
-                            width: 300,
-                            child: buildTextField(context, (value) {
-                            if (number.length == 12) {
-                            setState(() {
-                            textField = true;
-                            signInUser('+$number', context);
-                            bottom(context);
-                            errorcode = 2;
-                            });
-                            }
-                            else if (number.length != 12) {
-                            textField = false;
-                            setState(() {
-                            errorcode = 0;
-                            });
-                            }
-                            }, emailController, TextInputType.emailAddress,
-                            'Email', 'johnDoe@gmail.com'),
-                            );
-                          }),
+                              if (number.length == 12) {
+                              setState(() {
+                              textField = true;
+                              signInUser('+$number', context);
+                              bottom(context);
+                              errorcode = 2;
+                              });
+                              }
+                              else if (number.length != 12) {
+                              textField = false;
+                              setState(() {
+                              errorcode = 0;
+                              });
+                              }
+                              }, emailController, TextInputType.emailAddress,
+                              'Email', 'johnDoe@gmail.com'),
+                              );
+                            }),
+                      ),
                       const SizedBox(
                         height:5,
                       ),
@@ -203,6 +219,7 @@ class _VerifyState extends State<Verify> {
                         },
 
                         child: Container(
+                          margin: EdgeInsets.only(left: 20 ,right: 20),
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: mainOrange,
@@ -213,7 +230,7 @@ class _VerifyState extends State<Verify> {
                           ) ,
 
                           height: 50,
-                          width:250 ,
+
                           child: const Center(
                             child: Text(
                               'Sign in',
@@ -229,7 +246,7 @@ class _VerifyState extends State<Verify> {
                         height: 20,
                       ),
                       const Row(
-                       
+
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
@@ -272,58 +289,61 @@ class _VerifyState extends State<Verify> {
                           builder:(context,dataProviderModel,child){
                        return ElavatedButton(dataProviderModel.buttonName , mainOrange, white,() {
 
-    Provider.of<VerifyPage>(context , listen: false).onClick();
+                              Provider.of<VerifyPage>(context , listen: false).onClick();
                         },3);
-  }),
+                            }),
                       const SizedBox(
                         height: 90,
                       ),
-                    RichText(
-                      text: const TextSpan(
-                        text: 'To uphold account security and align with our '
-                        ,
-                        style: TextStyle(
+                    Flexible(
+                      flex: 1,
+                      child: RichText(
+                        text: const TextSpan(
+                          text: 'To uphold account security and align with our '
+                          ,
+                          style: TextStyle(
 
-                          color: white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13,
+                            color: white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 13,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "Terms & Conditions",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color:error,
+                                fontWeight: FontWeight.w800,
+                                fontSize:13,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " and ",
+                              style: TextStyle(
+                                color:white,
+                                fontWeight: FontWeight.w800,
+                                fontSize:13,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Data Privacy Policy",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color:error,
+                                fontWeight: FontWeight.w800,
+                                fontSize:13,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " we employ a one-time passcode (OTP) verification to your registered number/email.",
+                              style: TextStyle(
+                                color:white,
+                                fontWeight: FontWeight.w800,
+                                fontSize:13,
+                              ),
+                            )
+                          ],
                         ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "Terms & Conditions",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color:error,
-                              fontWeight: FontWeight.w800,
-                              fontSize:13,
-                            ),
-                          ),
-                          TextSpan(
-                            text: " and ",
-                            style: TextStyle(
-                              color:white,
-                              fontWeight: FontWeight.w800,
-                              fontSize:13,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "Data Privacy Policy",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color:error,
-                              fontWeight: FontWeight.w800,
-                              fontSize:13,
-                            ),
-                          ),
-                          TextSpan(
-                            text: " we employ a one-time passcode (OTP) verification to your registered number/email.",
-                            style: TextStyle(
-                              color:white,
-                              fontWeight: FontWeight.w800,
-                              fontSize:13,
-                            ),
-                          )
-                        ],
                       ),
                     ),
 
@@ -331,9 +351,9 @@ class _VerifyState extends State<Verify> {
                   ),
                 ),
               )
-
+        
             ],
-
+        
           ),
         ),
       ),
@@ -353,6 +373,7 @@ class _VerifyState extends State<Verify> {
                             color: white
                         ),
                         decoration:InputDecoration(
+                          counterText: '',
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: white), // Set the color you want
                           ),
@@ -485,7 +506,7 @@ retry(){
               bottom: MediaQuery.of(ctx).viewInsets.bottom
           ),
           child: Container(
-            width: 300,
+
             height: 350,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),

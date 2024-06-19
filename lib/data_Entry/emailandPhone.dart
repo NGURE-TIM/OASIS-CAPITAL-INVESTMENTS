@@ -3,6 +3,7 @@ import 'package:fulusi/colors/colors.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fulusi/data_Entry/dob.dart';
 
+import '../global/size_config.dart';
 import '../globalWidgets.dart';
 import 'dataEntryWidgets/widgets.dart';
 
@@ -30,10 +31,10 @@ class _ContactsState extends State<Contacts> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(
+               Center(
                   child: Image(
-                    width: 300,
-                    height: 300,
+                    width:  SizeConfig.screenWidth *1,
+                    height: SizeConfig.screenHeight * 0.35,
                     image: Svg('assets/images/account_Info/Email and password/Email capture-pana.svg'),
                   ),
                 ),
