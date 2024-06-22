@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fulusi/Database/firebase.dart';
 import 'package:fulusi/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fulusi/home/home.dart';
 import 'package:provider/provider.dart';
-import 'package:fulusi/home/dashboard.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+//import 'package:fulusi/home/dashboard.dart';
 import '../../../global/size_config.dart';
 import '../../../globalWidgets.dart';
 import '../../../stateManagement_provider/provider.dart';
@@ -63,6 +65,12 @@ class Verify extends StatefulWidget {
 
 
 class _VerifyState extends State<Verify> {
+  @override
+
+  void initState(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -346,7 +354,6 @@ class _VerifyState extends State<Verify> {
                         ),
                       ),
                     ),
-
                     ],
                   ),
                 ),
@@ -422,7 +429,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
   await verifyPhoneNumber(phoneNumber, context);
   //user can only signin with a verified number]
 
-  if(context.mounted && Provider.of<VerifyPage>(context, listen: false).exists==true){
+  if(context.mounted && Provider.of<VerifyPage>(context, listen: false).exists==2){
     try {
       Provider.of<TimerDuration>(context, listen: false).start();
       await auth.verifyPhoneNumber(
@@ -432,7 +439,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
           await auth.signInWithCredential(credential);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dash()),
+            MaterialPageRoute(builder: (context) => Home()),
           );
         },
         //TODO: Ask the user to check for a connection.
@@ -457,7 +464,7 @@ signInUser(String phoneNumber , BuildContext  context ) async{
               await Future.delayed(const Duration(milliseconds: 100));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Dash()),
+                MaterialPageRoute(builder: (context) => Home()),
 
               );
 
@@ -507,7 +514,7 @@ retry(){
           ),
           child: Container(
 
-            height: 350,
+            height: 400,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: white
@@ -539,50 +546,61 @@ retry(){
                         Consumer<VerifyPage>(
                     builder:(context,dataProviderModel,child) {
 
-                      return
+                      if (dataProviderModel.exists == 2 )
+                        {
+                          return
+                            RichText(
+                              text: TextSpan(
+                                text: 'A login code has been sent to ',
+                                style: const TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '+$phoneNumber',
+                                    style: const TextStyle(
+                                      color: seedBlue,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                        }
 
-                     dataProviderModel.exists ? RichText(
-                       text: TextSpan(
-                         text: 'A login code has been sent to ',
-                         style: const TextStyle(
-                           color: black,
-                           fontWeight: FontWeight.w700,
-                           fontSize: 20,
-                         ),
-                         children: <TextSpan>[
-                           TextSpan(
-                             text: '+$phoneNumber',
-                             style: const TextStyle(
-                               color: seedBlue,
-                               decoration: TextDecoration.underline,
-                               fontWeight: FontWeight.w700,
-                               fontSize: 20,
-                             ),
-                           ),
-                         ],
-                       ),
-                     ) :
-                     RichText(
-                       text: TextSpan(
-                         text: '+$phoneNumber ',
-                         style: const TextStyle(
+                      else if (dataProviderModel.exists == 3)
+{
+  return  RichText(
+    text: TextSpan(
+      text: '+$phoneNumber ',
+      style: const TextStyle(
 
-                           color: black,
-                           fontWeight: FontWeight.w700,
-                           fontSize: 20,
-                         ),
-                         children: const <TextSpan>[
-                           TextSpan(
-                             text: "is ether incorrect or doesn't exist in our records.Kindly confirm your entry",
-                             style: TextStyle(
-                               color:error,
-                               fontWeight: FontWeight.w800,
-                               fontSize:18,
-                             ),
-                           ),
-                         ],
-                       ),
-                     );
+        color: black,
+        fontWeight: FontWeight.w700,
+        fontSize: 20,
+      ),
+      children: const <TextSpan>[
+        TextSpan(
+          text: "is ether incorrect or doesn't exist in our records.Kindly confirm your entry",
+          style: TextStyle(
+            color:error,
+            fontWeight: FontWeight.w800,
+            fontSize:18,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+                      else {
+                        return SizedBox.shrink();
+                      }
                     }
                         ),
                         const SizedBox(height: 20),
@@ -661,7 +679,7 @@ Row(
           );
         } ),
                         const SizedBox(
-                          height: 15,
+                          height: 25,
                         ),
         Consumer<TimerDuration>(
         builder:(context,dataProviderModel,child) {
@@ -730,7 +748,6 @@ void clearTexts(BuildContext context){
 }
 
 
-
 class OtpInput extends StatelessWidget {
   final  TextEditingController controller;
   final int input;
@@ -751,6 +768,7 @@ OtpInput(this.controller , this.input);
         maxLength: 1,
         cursorColor: seedBlue,
         decoration:InputDecoration(
+          counterText: '',
           hintText: 'x',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))

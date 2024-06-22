@@ -57,163 +57,178 @@ class _ProfileState extends State<Profile> {
               decoration: BoxDecoration(
                 color: white.withOpacity(0.1)
               ),
-              child: Column(
-                children: [
-                  AppBar(
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    shadowColor: transparent,
                     elevation: 0,
-                    leadingWidth: 0,
-backgroundColor: transparent,
-leading:null,
-                    titleSpacing: 0,
-                    automaticallyImplyLeading: false,
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: IconButton(onPressed: (){
-                          Whatsapp.launchWhatsAppUri();
-                        },
-                          icon: Icon(
-                              Icons.headset_mic_outlined
-                          ),
-                        ),
-                      )
-                    ],
-                    title: Row(
-                      children: [
+                    backgroundColor: transparent,
+                    leading: Icon(Icons.add, color:transparent,),
+                    flexibleSpace: AppBar(
 
+                      elevation: 0,
+                      leadingWidth: 0,
+                      backgroundColor: transparent,
+                      leading:null,
+                      titleSpacing: 0,
+                      automaticallyImplyLeading: false,
+                      actions: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text(
-                            'My profile',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20,top:10),
-                    child:Material(
-                      borderRadius: BorderRadius.circular(10.0),
-                      shadowColor: grey,
-                      elevation:2,
-                      child: Container(
-                      
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image : const DecorationImage(
-                            image: AssetImage("assets/images/container.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child:  Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 40.0,right: 40,top: 20, bottom: 20),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                      
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      buildColumn('Due Date'),
-                                     Spacer(),
-                                      buildColumn('Due Amount'),
-                                    ],
-                                  ),
-                      
-                                ],
-                              ),
+                          padding: const EdgeInsets.only(right: 20),
+                          child: IconButton(onPressed: (){
+                            Whatsapp.launchWhatsAppUri();
+                          },
+                            icon: Icon(
+                                Icons.headset_mic_outlined
                             ),
-                          ),
-                        ),
-                      
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left:20,right: 20,top: 20),
-                    child: Column(
-                      children: [
-                        Material(
-                          shadowColor: mainOrange.withOpacity(0.6),
-                          elevation:2,
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            width: double.infinity,
-
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child:   Column(
-
-                                      crossAxisAlignment:CrossAxisAlignment.start ,
-                                      children: [
-                                        buildPadding('Account', 'assets/images/profile/user (1).png',(){Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => Account()),
-                                        );}),
-                                        buildPadding('Coupons', 'assets/images/profile/ticket.png',(){
-
-
-                                        }),
-                                        buildPadding('Feedback', 'assets/images/profile/feedback.png',(){
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => Suggestions()),
-                                          );
-                                        }),
-                                        buildPadding('FAQ', 'assets/images/profile/chat.png',(){
-
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => FAQ()),
-                                          );
-                                        }),
-                                        buildPadding('Privacy Policy', 'assets/images/profile/padlock.png',(){
-
-                                        }),
-                                        buildPadding('Settings', 'assets/images/profile/cogwheels.png',(){
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => Settings()),
-                                          );
-                                        }),
-                                        buildPadding('About us', 'assets/images/profile/information.png',(){
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => About()),
-                                          );
-                                        }),
-
-
-                                      ],
-
-                              ),
-                            ) ,
                           ),
                         )
                       ],
+                      title: Row(
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              'My profile',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
                     ),
                   ),
-                ],
+                  SliverList( delegate: SliverChildBuilderDelegate(
+
+                        childCount: 1,
+
+                      (BuildContext context, int index){
+                       return Column(
+                         children: [
+                           Padding(
+                             padding: const EdgeInsets.only(left: 20,right: 20,top:10),
+                             child:Material(
+                               borderRadius: BorderRadius.circular(10.0),
+                               shadowColor: grey,
+                               elevation:2,
+                               child: Container(
+
+                                 width: double.infinity,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(10),
+                                   image : const DecorationImage(
+                                     image: AssetImage("assets/images/container.jpg"),
+                                     fit: BoxFit.cover,
+                                   ),
+                                 ),
+                                 child:  Center(
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 40.0,right: 40,top: 20, bottom: 20),
+                                     child: Center(
+                                       child: Column(
+                                         mainAxisAlignment: MainAxisAlignment.center,
+                                         children: [
+
+                                           Row(
+                                             mainAxisAlignment: MainAxisAlignment.center,
+                                             children: [
+                                               buildColumn('Due Date'),
+                                               Spacer(),
+                                               buildColumn('Due Amount'),
+                                             ],
+                                           ),
+
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+
+                               ),
+                             ),
+                           ),
+
+                           Padding(
+                             padding: const EdgeInsets.only(left:20,right: 20,top: 20),
+                             child: Column(
+                               children: [
+                                 Material(
+                                   shadowColor: mainOrange.withOpacity(0.6),
+                                   elevation:2,
+                                   borderRadius: BorderRadius.circular(10.0),
+                                   child: Container(
+
+                                     decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.circular(10.0),
+                                     ),
+                                     width: double.infinity,
+
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(12),
+                                       child:   Column(
+
+                                         crossAxisAlignment:CrossAxisAlignment.start ,
+                                         children: [
+                                           buildPadding('Account', 'assets/images/profile/user (1).png',(){Navigator.push(
+                                             context,
+                                             MaterialPageRoute(builder: (context) => Account()),
+                                           );}),
+                                           buildPadding('Coupons', 'assets/images/profile/ticket.png',(){
+
+
+                                           }),
+                                           buildPadding('Feedback', 'assets/images/profile/feedback.png',(){
+                                             Navigator.push(
+                                               context,
+                                               MaterialPageRoute(builder: (context) => Suggestions()),
+                                             );
+                                           }),
+                                           buildPadding('FAQ', 'assets/images/profile/chat.png',(){
+
+                                             Navigator.push(
+                                               context,
+                                               MaterialPageRoute(builder: (context) => FAQ()),
+                                             );
+                                           }),
+                                           buildPadding('Privacy Policy', 'assets/images/profile/padlock.png',(){
+
+                                           }),
+                                           buildPadding('Settings', 'assets/images/profile/cogwheels.png',(){
+                                             Navigator.push(
+                                               context,
+                                               MaterialPageRoute(builder: (context) => Settings()),
+                                             );
+                                           }),
+                                           buildPadding('About us', 'assets/images/profile/information.png',(){
+                                             Navigator.push(
+                                               context,
+                                               MaterialPageRoute(builder: (context) => About()),
+                                             );
+                                           }),
+
+
+                                         ],
+
+                                       ),
+                                     ) ,
+                                   ),
+                                 )
+                               ],
+                             ),
+                           )
+                         ],
+                       ) ;
+                      }
               ),
             ),
-            
-
-
 
           ],
         ),
       ),
-
+]
+    ),
+    )
     );
   }
 

@@ -57,7 +57,6 @@ class _FAQState extends State<FAQ> {
             backgroundColor: white,
             appBar: AppBar(
               title: Text(
-
                   'Frequently asked questions',
                   style: Theme.of(context).textTheme.titleLarge),
             ),

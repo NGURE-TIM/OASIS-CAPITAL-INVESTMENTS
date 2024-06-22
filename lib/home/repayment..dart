@@ -12,6 +12,7 @@ class Repayment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: [
         Scaffold(
@@ -321,7 +322,6 @@ class Repayment extends StatelessWidget {
                                     style:
 
                                     ElevatedButton.styleFrom(
-                                        fixedSize: Size(80, 20),
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                         elevation: 5, backgroundColor: mainOrange
                                     ), child: Text(

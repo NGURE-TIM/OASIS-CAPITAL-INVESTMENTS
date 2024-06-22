@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:fulusi/splashPages/splash.dart';
 import 'package:fulusi/themes/theme.dart';
 import 'firebase_options.dart';
@@ -7,6 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:fulusi/stateManagement_provider/provider.dart';
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();
+SystemChrome.setPreferredOrientations([
+  DeviceOrientation.portraitUp,
+]);
 try {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

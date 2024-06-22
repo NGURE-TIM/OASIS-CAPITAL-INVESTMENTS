@@ -135,15 +135,19 @@ class VerifyPage extends ChangeNotifier{
     notifyListeners();
   }
 bool x=false;
-  bool exists=false;
+int exists =1;
   dbCall(){
-    exists=true;
+    exists=2;
     x=true;
+    notifyListeners();
+  }
+  numberNotFound(){
+    exists=3;
     notifyListeners();
   }
   reset(){
     //reseting value back to false
-    exists=false;
+    exists=1;
     notifyListeners();
   }
 }

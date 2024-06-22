@@ -23,43 +23,45 @@ class Account extends StatelessWidget {
               'Review Application Profile',
               style: Theme.of(context).textTheme.titleLarge),
         ),
-        body:Column(
-         children: [
-           SizedBox(
-             height: 10,
-           ),
-           Container(
-
-             width: double.infinity,
-             child: Padding(
-               padding: EdgeInsets.all(20),
-               child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Text(
-                     'My information',
-                         style: TextStyle(
-                   color: black,
-                   fontSize: 20,
-                   fontWeight: FontWeight.w500,
-                   ),
-                   ),
-                   SizedBox(height: 20,),
-
-                   buildContainer('Name','Tim Ngure'),
-                   buildContainer('National ID','36963975'),
-                   buildContainer('Date of Birth','1999-12-29'),
-                   buildContainer('Gender','Male'),
-                   buildContainer('Phone Number','07487080855'),
-                   buildContainer('Personal Email','kangushtim@gmail.com'),
-                   buildContainer('Education','College'),
-                   buildContainer('Monthly Income','above 500,000 KES'),
-                   buildContainer('Oasis UID','XXXXXXXXXXXXX'),
-                 ],
-               ),
-             ) ,
-           )
-         ],
+        body:SingleChildScrollView(
+          child: Column(
+           children: [
+             SizedBox(
+               height: 10,
+             ),
+             Container(
+          
+               width: double.infinity,
+               child: Padding(
+                 padding: EdgeInsets.all(20),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Text(
+                       'My information',
+                           style: TextStyle(
+                     color: black,
+                     fontSize: 20,
+                     fontWeight: FontWeight.w500,
+                     ),
+                     ),
+                     SizedBox(height: 20,),
+          
+                     buildContainer('Name','Tim Ngure'),
+                     buildContainer('National ID','36963975'),
+                     buildContainer('Date of Birth','1999-12-29'),
+                     buildContainer('Gender','Male'),
+                     buildContainer('Phone Number','07487080855'),
+                     buildContainer('Personal Email','kangushtim@gmail.com'),
+                     buildContainer('Education','College'),
+                     buildContainer('Monthly Income','above 500,000 KES'),
+                     buildContainer('Oasis UID','XXXXXXXXXXXXX'),
+                   ],
+                 ),
+               ) ,
+             )
+           ],
+          ),
         )
 
       ))

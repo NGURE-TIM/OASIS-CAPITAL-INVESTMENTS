@@ -50,6 +50,9 @@ verifyPhoneNumber(String address ,BuildContext context )async{
     if (snapshot.docs.isNotEmpty && context.mounted){
       Provider.of<VerifyPage>(context , listen: false).dbCall();
     }
+    else if (snapshot.docs.isEmpty && context.mounted){
+      Provider.of<VerifyPage>(context , listen: false).numberNotFound();
+    }
     else if(context.mounted){
       Provider.of<VerifyPage>(context , listen: false).reset();
     }

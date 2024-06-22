@@ -5,6 +5,7 @@ import 'package:fulusi/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_icon/animated_icon.dart';
 import 'package:fulusi/home/repayment..dart';
+import '../global/size_config.dart';
 import '../globalWidgets.dart';
 import '../loan/loan.dart';
 
@@ -30,421 +31,389 @@ class _DashState extends State<Dash> {
       child:
           Scaffold(
             backgroundColor: white,
-            body: Stack(
-              children: [
-              Container(
-              height: 200,
-              width: double.infinity,
-              decoration:   BoxDecoration(
-                  border:Border(
-                      bottom: BorderSide(
-                        color: mainOrange,
-                        width: 12
-                      )),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40),
-                ),
-                  color: mainOrange.withOpacity(0.09)
-              ),
-            ),
-                Positioned(
-                  child: Container(
-                    width: screensize.width,
-                    height: screensize.height,
-                    /*+ decoration: BoxDecoration(
-                      image : DecorationImage(
-                        image: AssetImage("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
-                        fit: BoxFit.contain,
-                        colorFilter: ColorFilter.mode(
-                          white.withOpacity(0.9),
-                          BlendMode.darken,
-                        ),
-                      ),
-                    ),*/
-                    child:Column(
-                      children: [
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment(0, 0.42),
-                            child: SizedBox(
-                              height: 250,
-                              width: 250,
-                              child: Opacity(
-                                opacity: 0.04,
-                                child: Image.asset(
-                                  "assets/images/cropped-Oasis-Capital-Investments-trans.png",
-                                  fit: BoxFit.contain, // Adjust the fit to cover the SizedBox
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-
-                  ),
-                ),
+            body: SingleChildScrollView(
+              child: Stack(
+                children: [
                 Container(
-                  child:   Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20 , top: 20),
-                    child:   Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.profile_circled , // Use any Cupertino icon you need
-                              size: 28, // Adjust the size of the icon
-                              color: mainOrange, // Adjust the color of the icon
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                           Text(
-                              'Hey, Tim',
-                              //:todo user name
-                              style: Theme.of(context).textTheme.titleLarge,),
-                            const Spacer(),
-                            const Icon(
-                              //:todo show messages
-                              CupertinoIcons.arrow_up_bin , // Use any Cupertino icon you need
-                              size: 28, // Adjust the size of the icon
-                              color: black, // Adjust the color of the icon
-                            ), const SizedBox(
-                              width: 10,
-                            ),
-                            AnimateIcon(
-                              //:todo only animate on init state and show the notifications with a red number
-                              onTap: () {},
-                              iconType: IconType.continueAnimation,
-                              height: 28,
-                              width: 28,
-                              color:black,
-                              animateIcon: AnimateIcons.bell,
-                            ),
-
-                          ],
-                        ),const SizedBox(
-                          height: 30,
+                height: SizeConfig.screenHeight * 0.3,
+                width: double.infinity,
+                decoration:   BoxDecoration(
+                    border:Border(
+                        bottom: BorderSide(
+                          color: mainOrange,
+                          width: 12
+                        )),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
+                  ),
+                    color: mainOrange.withOpacity(0.09)
+                ),
+              ),
+                  Positioned(
+                    child: Container(
+                      width: screensize.width,
+                      height: screensize.height,
+                      /*+ decoration: BoxDecoration(
+                        image : DecorationImage(
+                          image: AssetImage("assets/images/cropped-Oasis-Capital-Investments-trans.png"),
+                          fit: BoxFit.contain,
+                          colorFilter: ColorFilter.mode(
+                            white.withOpacity(0.9),
+                            BlendMode.darken,
+                          ),
                         ),
-                      /*FlutterCarousel(
-                          options: CarouselOptions(
-                            aspectRatio:1.5,
-                            clipBehavior: Clip.none,
-                              autoPlay: false,
-                             // height: 200,
-                              viewportFraction:.9 ,
-                              enlargeCenterPage: true,
-                              showIndicator: true,
-                              slideIndicator: const CircularSlideIndicator(
-                                  indicatorBorderColor: white,
-                                  currentIndicatorColor: mainOrange,
-                                  indicatorBackgroundColor: grey
+                      ),*/
+                      child:Expanded(
+                        child: Align(
+                          alignment: Alignment(0, 0.4),
+                          child:
+                          Container(
+                            margin:EdgeInsets.all(20),
+                            child: Opacity(
+                              opacity: 0.05,
+                              child: Image.asset(
+                                "assets/images/cropped-Oasis-Capital-Investments-trans.png",
+                                fit: BoxFit.contain, // Adjust the fit to cover the SizedBox
                               ),
-                              floatingIndicator: false
-                          ),
-                          items: sliders.map((item) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return item;
-                              },
-                            );
-                          }).toList(),
-                        ),*/
-
-                        Material(
-                          shadowColor: mainOrange,
-                          elevation: 3,
-                          shape:RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Container(
-                          height: 180,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-
-                              borderRadius: BorderRadius.circular(20),
-                              color: white
                             ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
+                          ),
+                        ),
+                      )
+              
+                    ),
+                  ),
+                  Container(
+                    height:SizeConfig.screenHeight,
+                    width:SizeConfig.screenWidth,
+                    child:   Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20 , top: 20),
+                      child:   Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                CupertinoIcons.profile_circled , // Use any Cupertino icon you need
+                                size: 28, // Adjust the size of the icon
+                                color: mainOrange, // Adjust the color of the icon
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                             Text(
+                                'Hey, Tim',
+                                //:todo user name
+                                style: Theme.of(context).textTheme.titleLarge,),
+                              const Spacer(),
+                              const Icon(
+                                //:todo show messages
+                                CupertinoIcons.arrow_up_bin , // Use any Cupertino icon you need
+                                size: 28, // Adjust the size of the icon
+                                color: black, // Adjust the color of the icon
+                              ), const SizedBox(
+                                width: 10,
+                              ),
+                              AnimateIcon(
+                                //:todo only animate on init state and show the notifications with a red number
+                                onTap: () {},
+                                iconType: IconType.continueAnimation,
+                                height: 28,
+                                width: 28,
+                                color:black,
+                                animateIcon: AnimateIcons.bell,
+                              ),
 
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
+                            ],
+                          ),const SizedBox(
+                            height: 30,
+                          ),
+                          Material(
+                            shadowColor: mainOrange,
+                            elevation: 3,
+                            shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Container(
+                           // height: SizeConfig.screenHeight * 0.27,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
 
-                                    Text(
-                                      'You can get upto ',
-                                      style: TextStyle(
+                                borderRadius: BorderRadius.circular(20),
+                                color: white
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+
+                                      Text(
+                                        'You can get upto ',
+                                        style: TextStyle(
+                                            shadows: [
+                                              Shadow(
+                                                color: black.withOpacity(0.3), // Shadow color
+                                                offset: Offset(3, 3), // Offset of the shadow
+                                                blurRadius: 8, // Blur radius of the shadow
+                                              ),
+                                            ],
+                                            color: grey,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize:15
+                                        ),),
+
+
+                                      Text(
+                                        'Ksh 100,000',
+
+                                        style: TextStyle(
+
+                                          color: mainBlue,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize:30,
                                           shadows: [
                                             Shadow(
-                                              color: black.withOpacity(0.3), // Shadow color
-                                              offset: Offset(3, 3), // Offset of the shadow
-                                              blurRadius: 8, // Blur radius of the shadow
-                                            ),
-                                          ],
-                                          color: grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize:15
-                                      ),),
-
-
-                                    Text(
-                                      'Ksh 100,000',
-
-                                      style: TextStyle(
-
-                                        color: mainBlue,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize:30,
-                                        shadows: [
-                                          Shadow(
-                                            color: black.withOpacity(0.3), // Shadow color
-                                            offset: Offset(3, 3), // Offset of the shadow
-                                            blurRadius: 3, // Blur radius of the shadow
-                                          ),
-                                        ],
-                                      ),),
-
-SizedBox(
-  height: 30,
-),
-
-                                    Center(
-                                      child: Container(
-                                        height: 40,
-                                        width: 200,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromRGBO(255, 176, 51, 1.0),
-                                              Color.fromRGBO(255, 176, 51, 1.0),
-                                              Color.fromRGBO(254, 128, 51, 1.0),
-                                              Color.fromRGBO(254, 128, 51, 1.0),
-                                            ],
-                                            stops: [0.1, 0.2, 0.7, 0.9],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
                                               color: black.withOpacity(0.3), // Shadow color
                                               offset: Offset(3, 3), // Offset of the shadow
                                               blurRadius: 3, // Blur radius of the shadow
                                             ),
                                           ],
-                                        ),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Your onPressed code here
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => Loan()),
-                                            );
-                                          },
-                                          onHover: null,
-                                          onLongPress: null,
-                                          onFocusChange: null,
-                                          autofocus: false,
-                                          style: ElevatedButton.styleFrom(
+                                        ),),
 
-                                            elevation: 0,
-                                            backgroundColor: Colors.transparent, // Make button background transparent
-                                          ),
-                                          child: Text(
-                                            'APPLY NOW',
-                                            style: TextStyle(
-                                              color: white,
-                                              fontSize: 20,
-                                              shadows: [
-                                                Shadow(
-                                                  color: black.withOpacity(0.3), // Shadow color
-                                                  offset: Offset(3, 3), // Offset of the shadow
-                                                  blurRadius: 3, // Blur radius of the shadow
-                                                ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+
+                                      Center(
+                                        child: Container(
+
+                                          padding:EdgeInsets.symmetric(vertical: 0 ,horizontal: 0),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(255, 176, 51, 1.0),
+                                                Color.fromRGBO(255, 176, 51, 1.0),
+                                                Color.fromRGBO(254, 128, 51, 1.0),
+                                                Color.fromRGBO(254, 128, 51, 1.0),
                                               ],
+                                              stops: [0.1, 0.2, 0.7, 0.9],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: black.withOpacity(0.3), // Shadow color
+                                                offset: Offset(3, 3), // Offset of the shadow
+                                                blurRadius: 3, // Blur radius of the shadow
+                                              ),
+                                            ],
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => Loan()),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left:40 ,right:40,top: 5 , bottom: 5),
+                                              child: Text(
+                                                'APPLY NOW',
+                                                style: TextStyle(
+                                                  color: white,
+                                                  fontSize: 20,
+                                                  shadows: [
+                                                    Shadow(
+                                                      color: black.withOpacity(0.3), // Shadow color
+                                                      offset: Offset(3, 3), // Offset of the shadow
+                                                      blurRadius: 3, // Blur radius of the shadow
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
 
 
 
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                  const SizedBox(
-                  height: 25,
-                ),
-                        Row(
-                         
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            homepageicons(Icons.send_to_mobile_sharp,'Repayment',(){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Repayment()),
-                              );
-                            } ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            homepageicons(Icons.history,'Transactions',(){
-                              //todo:history
-                            } ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            /* homepageicons(Icons.account_balance_wallet_sharp,'Account' ),
-                            const SizedBox(
-                              width: 15,
-                            ),*/
-
-                            homepageicons(Icons.share_sharp,'Invite',(){
-                              //todo:invite
-                            } ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                         Container(
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(20),
-                               gradient: LinearGradient(
-                                 begin: Alignment.topLeft,
-                                 end: Alignment.bottomRight,
-                                 colors: [mainOrange.withOpacity(0.09), white.withOpacity(0.01)],
-                               ),
-                             ),
-                             child: Padding(
-                               padding: const EdgeInsets.only(left: 25 ,right: 25,top: 20,bottom: 20),
-                               child: Column(
-
-                                 children: [
-                                  Row(
-                                   children: [
-                                     buildRow('KES100K','Daily Payments','assets/images/home/payment-method.png'),
-                            Spacer(),
-                                     buildRow('100+','Happy Customers','assets/images/home/rating (1).png'),
-                                     //buildRow('10+','Experts','assets/images/home/support.png'),
-                                   ],
-                                  )
-                                 ],
-                               ),
-                             )
-                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left:20,right: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(3, (index) => buildImage(imagePaths[index] , steps[index] , stepsSates[index])),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        Material(
-                          elevation: 2,
-                          shape:RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: InkWell(
-                            onTap: (
-
-                                ){
-                              Whatsapp.launchWhatsAppUri();
-                            },
-                            highlightColor: white,
-                            splashColor: null ,
-                            borderRadius: BorderRadius.circular(8),
-                            radius: 10,
-                            child: Container(
-                              width:double.infinity,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-color: white
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row (
-
-                                    children: [
-                                      const Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Need help ?' , style: TextStyle(
-                                              color:black,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize:20
-                                          )),
-                                          SizedBox(height:5,),
-                                          Text('Chat with us on Whatsapp', style: TextStyle(
-                                              color:grey,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize:15
-                                          )),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Material(
-                                        color: white,
-                                        shadowColor: mainBlue,
-                                        elevation: 6,
-                                        shape:RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        child: SizedBox(
-                                            height:40,
-                                            width:40,
-                                            child: Image( image: AssetImage('assets/images/home/whatsapp.png'),)),
-                                      )
                                     ],
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 50,
-                  right:10,
-                  child: SizedBox(
-                    child: ClipRRect(
+                                        const SizedBox(
+                                        height: 25,
+                                      ),
+                          Row(
 
-                      borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
-                      child: Image.asset(
-                        "assets/images/home/box/Screenshot_2024-05-23_150144-removebg-preview.png",
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              homepageicons(Icons.send_to_mobile_sharp,'Repayment',(){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Repayment()),
+                                );
+                              } ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              homepageicons(Icons.history,'Transactions',(){
+                                //todo:history
+                              } ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              /* homepageicons(Icons.account_balance_wallet_sharp,'Account' ),
+                              const SizedBox(
+                                width: 15,
+                              ),*/
+
+                              homepageicons(Icons.share_sharp,'Invite',(){
+                                //todo:invite
+                              } ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                           Container(
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(20),
+                                 gradient: LinearGradient(
+                                   begin: Alignment.topLeft,
+                                   end: Alignment.bottomRight,
+                                   colors: [mainOrange.withOpacity(0.09), white.withOpacity(0.01)],
+                                 ),
+                               ),
+                               child: Padding(
+                                 padding: const EdgeInsets.only(left: 25 ,right: 25,top: 20,bottom: 20),
+                                 child: Column(
+
+                                   children: [
+                                    Row(
+                                     children: [
+                                       buildRow('KES100K','Daily Payments','assets/images/home/payment-method.png'),
+                              Spacer(),
+                                       buildRow('100+','Happy Customers','assets/images/home/rating (1).png'),
+                                       //buildRow('10+','Experts','assets/images/home/support.png'),
+                                     ],
+                                    )
+                                   ],
+                                 ),
+                               )
+                           ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:20,right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(3, (index) => buildImage(imagePaths[index] , steps[index] , stepsSates[index])),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+
+                          Material(
+                            elevation: 2,
+                            shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: InkWell(
+                              onTap: (
+
+                                  ){
+                                Whatsapp.launchWhatsAppUri();
+                              },
+                              highlightColor: white,
+                              splashColor: null ,
+                              borderRadius: BorderRadius.circular(8),
+                              radius: 10,
+                              child: Container(
+                                width:double.infinity,
+
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                        color: white
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Row (
+
+                                      children: [
+                                        const Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Need help ?' , style: TextStyle(
+                                                color:black,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize:20
+                                            )),
+
+                                            Text('Chat with us on Whatsapp', style: TextStyle(
+                                                color:grey,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize:15
+                                            )),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        Material(
+                                          color: white,
+                                          shadowColor: mainBlue,
+                                          elevation: 6,
+                                          shape:RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: SizedBox(
+                                              height:40,
+                                              width:40,
+                                              child: Image( image: AssetImage('assets/images/home/whatsapp.png'),)),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    top: 50,
+                    right:10,
+                    child: SizedBox(
+                      child: ClipRRect(
+              
+                        borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
+                        child: Image.asset(
+                          "assets/images/home/box/Screenshot_2024-05-23_150144-removebg-preview.png",
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 

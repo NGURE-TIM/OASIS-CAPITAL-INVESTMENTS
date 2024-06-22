@@ -23,18 +23,17 @@ class ElavatedButton extends StatelessWidget {
       style:
 
       ElevatedButton.styleFrom(
-    fixedSize: Size(
-       SizeConfig.screenWidth * 0.45,
-        SizeConfig.screenHeight * 0.06
-
-    ),
+          fixedSize: Size(
+              SizeConfig.screenWidth * 0.4,
+              SizeConfig.screenHeight * 0.06
+          ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           elevation: elavation, backgroundColor: bodyColor
       ), child: Text(
         text,
         style: TextStyle(
             color: textColor,
-                fontSize:SizeConfig.screenWidth * 0.045,
+                fontSize:SizeConfig.screenWidth * 0.04,
         ),
       ),
     );

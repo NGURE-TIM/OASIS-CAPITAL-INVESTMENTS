@@ -68,9 +68,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     context,
                     MaterialPageRoute(builder: (context) => Verify()),
                   );},3),
-               SizedBox(
-                      width:15
-                  ),
+                  SizedBox(width: SizeConfig.screenWidth * 0.04),
                   ElavatedButton('Continue' , white, mainOrange,(){Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Referral()),
